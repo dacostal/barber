@@ -1,0 +1,25 @@
+<!-- bouton haut de page -->
+<button onclick="goToTop()" id="topButton" title="Haut de page">↑</button>
+
+<!-- bas de page -->
+<footer class="footer text-center fixed-bottom">
+    <span class="text-dark">© 2021 Tous droits réservés</span>
+</footer>
+
+<!-- fonctions bouton haut de page -->
+<script type="text/javascript">
+    /* apparition du bouton après 25px */
+    window.onscroll = function() {
+        if (document.body.scrollTop > 25 || document.documentElement.scrollTop > 25) {
+            document.getElementById("topButton").style.display = "block";
+        } else {
+            document.getElementById("topButton").style.display = "none";
+        }
+    };
+
+    /* aller en début de page */
+    function goToTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>

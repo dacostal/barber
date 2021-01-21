@@ -3,11 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
         {% block stylesheets %}{% endblock %}
-
-        {% block javascripts %}{% endblock %}
     </head>
+
     <body>
+        {% include 'fragments/navbar.html.twig' %}
         {% block body %}{% endblock %}
+        {% include 'fragments/footer.html.twig' %}
+        {% block javascripts %}{% endblock %}
     </body>
 </html>
