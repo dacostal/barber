@@ -16,6 +16,10 @@ Chaque utilisateur connecté peut modifier ses informations personnelles.
 
 Ce site web est réalisé avec les langages HTML, CSS, JavaScript, PHP, les framework Symphony et BootStrap et la police Font Awesome.
 
+### Diagramme de classes
+
+![image](design/classDiagram.png)
+
 ## Auteurs
 
 * Eviatar Houri alias eviatar75
