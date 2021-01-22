@@ -3,14 +3,30 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Chewbacca Barber Shop - {% endblock %}</title>
+
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
         {% block stylesheets %}{% endblock %}
     </head>
 
     <body>
         {% include 'fragments/navbar.html.twig' %}
-        {% block body %}{% endblock %}
+
+        <div id="container">
+            {% block body %}{% endblock %}
+        </div>
+
         {% include 'fragments/footer.html.twig' %}
+
         {% block javascripts %}{% endblock %}
+
+        <!-- font awesome js -->
+        <script src="https://kit.fontawesome.com/0567d8c551.js"></script>
+
+        <!-- bootstrap js -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>

@@ -2,6 +2,19 @@
 
 {% block title %}{{ parent() }}Accueil{% endblock %}
 
+{% block stylesheets %}
+    <style>
+        #slogan{
+            position:fixed;
+            right:15%;
+            bottom:10%;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-    <h1>Hello {{ name }}! ✅</h1>
+    <div id="slogan" class="text-center">
+        <h1 class="text-light">Be Yourself</h1>
+        <h1 class="text-light">Be Chewbacca</h1>
+    </div>
 {% endblock %}
