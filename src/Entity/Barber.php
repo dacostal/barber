@@ -23,9 +23,15 @@ class Barber extends User
      */
     private $appointments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=service::class, inversedBy="barbers")
+     */
+    private $services;
+
     public function __construct()
     {
         $this->appointments = new ArrayCollection();
+        $this->services = new ArrayCollection();
     }
 
 
@@ -67,6 +73,30 @@ class Barber extends User
                 $appointment->setBarber(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|service[]
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(service $service): self
+    {
+        if (!$this->services->contains($service)) {
+            $this->services[] = $service;
+        }
+
+        return $this;
+    }
+
+    public function removeService(service $service): self
+    {
+        $this->services->removeElement($service);
 
         return $this;
     }

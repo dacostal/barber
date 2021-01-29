@@ -10,6 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Availability
 {
+    //enum bdd day
+    const DAY = array("Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi");
+    //enum bdd Time of day
+    const TIME_OF_DAY = array("Matin","Après-midi");
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

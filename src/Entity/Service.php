@@ -54,9 +54,15 @@ class Service
      */
     private $appointments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Barber::class, mappedBy="services")
+     */
+    private $barbers;
+
     public function __construct()
     {
         $this->appointments = new ArrayCollection();
+        $this->barbers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,6 +167,33 @@ class Service
             if ($appointment->getService() === $this) {
                 $appointment->setService(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Barber[]
+     */
+    public function getBarbers(): Collection
+    {
+        return $this->barbers;
+    }
+
+    public function addBarber(Barber $barber): self
+    {
+        if (!$this->barbers->contains($barber)) {
+            $this->barbers[] = $barber;
+            $barber->addService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBarber(Barber $barber): self
+    {
+        if ($this->barbers->removeElement($barber)) {
+            $barber->removeService($this);
         }
 
         return $this;

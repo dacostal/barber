@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 28 jan. 2021 à 18:25
+-- Généré le : ven. 29 jan. 2021 à 09:14
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.4.9
 
@@ -54,6 +54,8 @@ CREATE TABLE IF NOT EXISTS `appointment` (
 DROP TABLE IF EXISTS `availability`;
 CREATE TABLE IF NOT EXISTS `availability` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `day` enum('Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `timeOfDay` enum('Matin','Après-midi') COLLATE utf8mb4_unicode_ci NOT NULL,
   `start_time` time NOT NULL,
   `end_time` time NOT NULL,
   `barber_id` int(11) NOT NULL,
@@ -72,6 +74,21 @@ CREATE TABLE IF NOT EXISTS `barber` (
   `id` int(11) NOT NULL,
   `is_admin` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `barber_service`
+--
+
+DROP TABLE IF EXISTS `barber_service`;
+CREATE TABLE IF NOT EXISTS `barber_service` (
+  `barber_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
+  PRIMARY KEY (`barber_id`,`service_id`),
+  KEY `IDX_B6C881ABBFF2FEF2` (`barber_id`),
+  KEY `IDX_B6C881ABED5CA9E6` (`service_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -114,7 +131,8 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 ('DoctrineMigrations\\Version20210124175529', '2021-01-24 17:55:41', 107),
 ('DoctrineMigrations\\Version20210128175032', '2021-01-28 17:51:13', 362),
 ('DoctrineMigrations\\Version20210128175822', '2021-01-28 17:58:32', 51),
-('DoctrineMigrations\\Version20210128182137', '2021-01-28 18:21:41', 405);
+('DoctrineMigrations\\Version20210128182137', '2021-01-28 18:21:41', 405),
+('DoctrineMigrations\\Version20210129085519', '2021-01-29 08:55:41', 619);
 
 -- --------------------------------------------------------
 
@@ -178,6 +196,13 @@ ALTER TABLE `availability`
 --
 ALTER TABLE `barber`
   ADD CONSTRAINT `FK_7C48A9A4BF396750` FOREIGN KEY (`id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `barber_service`
+--
+ALTER TABLE `barber_service`
+  ADD CONSTRAINT `FK_B6C881ABBFF2FEF2` FOREIGN KEY (`barber_id`) REFERENCES `barber` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_B6C881ABED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `customer`
