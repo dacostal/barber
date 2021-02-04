@@ -19,12 +19,12 @@ class Barber extends User
     private $isAdmin;
 
     /**
-     * @ORM\OneToMany(targetEntity=appointment::class, mappedBy="barber")
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="barber")
      */
     private $appointments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=service::class, inversedBy="barbers")
+     * @ORM\ManyToMany(targetEntity=Service::class, inversedBy="barbers")
      */
     private $services;
 
