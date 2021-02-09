@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AppointmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass=AppointmentRepository::class)
  */
@@ -39,6 +40,7 @@ class Appointment
 
     /**
      * @ORM\Column(type="datetime")
+     *
      */
     private $createdAt;
 
@@ -64,6 +66,12 @@ class Appointment
      * @ORM\JoinColumn(nullable=false)
      */
     private $service;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+
 
     public function getId(): ?int
     {

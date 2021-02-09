@@ -2,27 +2,24 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Barber;
+use App\Entity\Appointment;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class BarberCrudController extends AbstractCrudController
+class AppointmentCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Barber::class;
+        return Appointment::class;
     }
 
-/*
+    /*
     public function configureFields(string $pageName): iterable
     {
         return [
-            'firstname',
-            'phone',
-            'email',
-            'service',
-            'createdAt',
-
+            IdField::new('id'),
+            TextField::new('title'),
+            TextEditorField::new('description'),
         ];
     }
-*/
+    */
 }

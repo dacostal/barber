@@ -1,8 +1,134 @@
 {% extends '@EasyAdmin/layout.html.twig' %}
 
 {% block main %}
-    <h1>Page Admin</h1>
-    Employés : {{ barbers }}
-     Prestations : {{ services }}
-{% endblock %}
 
+    <style>
+
+        .col {
+            margin-top: 30px;
+
+        }
+        .num{
+            font-weight: bold;
+            font-size: 25px;
+            text-align: center;
+
+        }
+        .table {
+            width: 530px;
+
+            margin-left: 140px;
+            float: left;
+
+
+        }
+        #div_chart {
+
+            float : left;
+            margin-top: 20px ;
+            margin-left: 32px;
+
+        }
+        .table-head{
+
+        }
+
+        .table-body {
+
+            overflow-y: auto;    /* Trigger vertical scroll    */
+            overflow-x: hidden;
+
+        }
+    </style>
+
+    <h1>Page Admin</h1>
+
+    <div class="container px-4">
+        <p> RENDEZ-VOUS </p>
+        <div class="row gx-5">
+            <div class="col">
+                <div class="p-3 border bg-light">
+                    <i class="fas fa-calendar-day">
+                    </i>
+                    Today's Appointments :
+                    <p class = "num">
+                        {% for ta in todayAppointments %}
+                        {{ ta }}
+                        {% endfor %}
+
+                        </p>
+
+                </div>
+            </div>
+            <div class="col">
+
+                <div class="p-3 border bg-light">
+                    <i class="fas fa-calendar-week"></i>
+
+                    This week's Appointments :
+                    <p class = "num">
+                        {% for ta in thisWeekAppointments %}
+                            {{ ta }}
+                        {% endfor %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ListAndChart">
+        <table class="table">
+
+            <thead class="table-head">
+            <tr>
+                <th scope="col">Barber </th>
+                <th scope="col">Time </th>
+                <th scope="col">Service </th>
+            </tr>
+            </thead>
+            <tbody class = "table-body">
+            {% for ap in todayList %}
+                    <tr>
+                        <td>{{ ap.first_name }} </td>
+                        <td>{{ ap.start_time|date('H:i')}}</td>
+                        <td>{{ ap.title }}</td>
+
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div id="div_chart"></div>
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            {{ gc_draw(chart, 'div_chart') }}
+        </script>
+
+    </div>
+
+
+    <div class="container px-4">
+        <div class="row gx-5">
+            <div class="col">
+                <div class="p-3 border bg-light">
+                    <i class="fas fa-calendar-day">
+                    </i>
+                    Today's Updated Barbers :
+                    <p class = "num">{{ appointments }}</p>
+
+                </div>
+            </div>
+            <div class="col">
+
+                <div class="p-3 border bg-light">
+                    <i class="fas fa-calendar-week"></i>
+
+                    Today's Updated Services :
+                    <p class = "num">{{ appointments }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

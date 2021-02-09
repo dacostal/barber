@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Appointment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Driver\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,87 @@ class AppointmentRepository extends ServiceEntityRepository
         parent::__construct($registry, Appointment::class);
     }
 
+    public function findTodayAppointments()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT COUNT(*) countToday FROM Appointment a
+            WHERE a.date = CURRENT_DATE 
+
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $todayAppointment = $stmt->fetchAllAssociative();
+
+        foreach ($todayAppointment as $aa)
+            $result = $aa;
+        return $result;
+    }
+
+    public function getTodayAppointments()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT a.start_time, b.first_name, s.title
+	            FROM Appointment a INNER JOIN user b
+                ON a.barber_id = b.id
+                INNER JOIN service s
+                ON a.service_id = s.id
+                WHERE a.date = CURRENT_DATE ;
+                ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAllAssociative();
+    }
+
+    public function findThisWeekAppointments()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT COUNT(*) FROM Appointment a
+            WHERE week(a.date) = week(CURRENT_DATE) 
+
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $thisWeekAppointment = $stmt->fetchAllAssociative();
+
+        foreach ($thisWeekAppointment as $aa)
+            $result = $aa;
+        return $result;
+    }
+
+    public function getThisWeekAppointments() : array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT DAYNAME(date) day, COUNT(*) count FROM Appointment a
+            WHERE week(a.date) = week(CURRENT_DATE) 
+            GROUP BY day
+            ORDER BY DAYOFWEEK(a.date)
+
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAllAssociative();
+
+    }
+
+ /*  public function getAppointmentsLastDays(): array
+    {
+
+        $conn  = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT COUNT(id) num, DATE(create) d FROM Appointment GROUP BY DATE(create)';
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAllAssociative();
+        } catch (\Doctrine\DBAL\Exception | Exception $e) {
+        }
+
+    }
+*/
     // /**
     //  * @return Appointment[] Returns an array of Appointment objects
     //  */
