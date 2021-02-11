@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 29 jan. 2021 à 09:14
+-- Généré le : mer. 03 fév. 2021 à 18:13
 -- Version du serveur :  5.7.31
--- Version de PHP : 7.4.9
+-- Version de PHP : 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -150,7 +150,26 @@ CREATE TABLE IF NOT EXISTS `service` (
   `created_at` datetime NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `service`
+--
+
+INSERT INTO `service` (`id`, `title`, `description`, `time`, `price`, `created_at`, `deleted_at`) VALUES
+(1, 'Chewbacca Men', 'shampooing, coupe, coiffage', '00:30:00', 36, '2021-02-03 19:13:27', NULL),
+(2, 'Little Chewbacca', '-20ans', '00:30:00', 28, '2021-02-03 19:13:27', NULL),
+(3, 'Baby Chewbacca', '-12ans', '00:30:00', 25, '2021-02-03 19:13:27', NULL),
+(4, 'No Hair', 'rasage du crâne au coupe-chou', '00:45:00', 41, '2021-02-03 19:13:27', NULL),
+(5, 'Clippers Cut', 'coupe à la tondeuse', '00:30:00', 29, '2021-02-03 19:13:27', NULL),
+(6, 'Fresh Beard', 'taille de barbe simple', '00:30:00', 24, '2021-02-03 19:13:27', NULL),
+(7, 'Chewbacca Beard', 'taille de barbe, finitions au coupe-chou', '00:15:00', 32, '2021-02-03 19:13:27', NULL),
+(8, 'Best Mustache', 'taille de moustache', '00:15:00', 8, '2021-02-03 19:13:27', NULL),
+(9, 'Dandy Beard', 'rasage à l\'ancienne à la vapeur', '01:00:00', 50, '2021-02-03 19:13:27', NULL),
+(10, 'Styling Beard', 'brushing de barbe', '00:10:00', 12, '2021-02-03 19:13:27', NULL),
+(11, 'Perfect Chewbacca', 'chewbacca men + chewbacca beard', '01:00:00', 62, '2021-02-03 19:13:27', NULL),
+(12, 'Gentlemen Chewbacca', 'chewbacca men + dandy beard', '01:30:00', 80, '2021-02-03 19:13:27', NULL),
+(13, 'Father & Son', 'coupe père & fils', '01:00:00', 55, '2021-02-03 19:13:28', NULL);
 
 -- --------------------------------------------------------
 
