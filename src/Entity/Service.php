@@ -50,7 +50,7 @@ class Service
     private $deletedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=appointment::class, mappedBy="service")
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="service")
      */
     private $appointments;
 
