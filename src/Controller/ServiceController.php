@@ -3,31 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\Service;
+use App\Repository\ServiceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-
-/**
- * Class ServiceController
- * @package App\Controller
- * @Route("/Service", name="Service_")
- */
-
 
 class ServiceController extends AbstractController
 {
     /**
      * @Route("/service", name="service")
+     * @param ServiceRepository $serviceRepository
+     * @return Response
      */
-    public function index(): Response
+    public function index(ServiceRepository $serviceRepository): Response
     {
-
-        $service = $this->getDoctrine()->getRepository(Service::class)->findBy([],['id' => 'asc']);
-        return $this->render('service/index.html.twig', compact('service'));
+        return $this->render('service/index.html.twig', [
+            'categories' => $serviceRepository->allCategories(),
+            'services' => $serviceRepository->findAll(),
+        ]);
     }
-
-
-
-
 }
