@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}Inscription{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        label.required:after {
+            content: "*";
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form, {'attr': {'class': 'w-50 mx-auto bg-white p-5'}}) }}
+        <h1 class="h3 font-weight-normal">Inscription</h1>
+
+        <div class="form-row">
+            <div class="col">
+                {{ form_label(form.firstName) }}
+                {{ form_widget(form.firstName) }}
+            </div>
+            <div class="col">
+                {{ form_label(form.lastName) }}
+                {{ form_widget(form.lastName) }}
+            </div>
+        </div>
+
+        {{ form_label(form.phone) }}
+        {{ form_widget(form.phone) }}
+
+        {{ form_label(form.address) }}
+        {{ form_widget(form.address) }}
+
+        <div class="form-row">
+            <div class="col-3">
+                {{ form_label(form.zipcode) }}
+                {{ form_widget(form.zipcode) }}
+            </div>
+            <div class="col">
+                {{ form_label(form.city) }}
+                {{ form_widget(form.city) }}
+            </div>
+        </div>
+
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email) }}
+
+        {{ form_label(form.password.first) }}
+        {{ form_widget(form.password.first) }}
+
+        {{ form_label(form.password.second) }}
+
+        {% if form_errors(form.password.first) %}
+            <small class="text-danger">
+                {{ form.password.vars.errors.form.config.options['invalid_message'] }}
+            </small>
+        {% endif %}
+
+        {{ form_widget(form.password.second) }}
+
+        <button class="btn btn-primary mt-4" type="submit">S'inscrire</button>
+
+        <hr>
+        <div class="text-right">
+            <span>Déjà inscrit ?</span>
+            <a href="{{ path('app_login') }}">Connexion</a>
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}
