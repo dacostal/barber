@@ -26,7 +26,9 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `appointment`
 --
-
+DROP DATABASE IF EXISTS 'barber ';
+CREATE DATABASE 'barber';
+USE 'barber';
 DROP TABLE IF EXISTS `appointment`;
 CREATE TABLE IF NOT EXISTS `appointment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
