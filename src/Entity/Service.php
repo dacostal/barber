@@ -59,6 +59,11 @@ class Service
      */
     private $barbers;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $category;
+
     public function __construct()
     {
         $this->appointments = new ArrayCollection();
@@ -195,6 +200,18 @@ class Service
         if ($this->barbers->removeElement($barber)) {
             $barber->removeService($this);
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
