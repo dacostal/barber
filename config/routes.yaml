@@ -2,7 +2,3 @@ index:
   path: /
   controller: App\Controller\DefaultController::index
 
-
-service:
-  path: /service
-  controller: App\Controller\ServiceController::index

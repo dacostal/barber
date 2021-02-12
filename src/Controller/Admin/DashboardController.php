@@ -11,26 +11,34 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use \Datetime;
 
 
 class DashboardController extends AbstractDashboardController
 {
-
-
     /**
      * @Route("/admin", name="admin")
      */
+
+
+
     public function index(): Response
     {
+
+        $now =new Datetime();
+        $now->setTimezone(new \DateTimeZone('Europe/Paris'));
+        $now=date_format($now,"d/m/y");
+
         $barbers = $this->getDoctrine()->getRepository(Barber::class)->count([]);
         $services = $this->getDoctrine()->getRepository(Service::class)->count([]);
         $appointments = $this->getDoctrine()->getRepository(Appointment::class)->count([]);
         $todayAppointments = $this->getDoctrine()->getRepository(Appointment::class)->findTodayAppointments();
         $thisWeekAppointments = $this->getDoctrine()->getRepository(Appointment::class)->findThisWeekAppointments();
         $chartData = $this->getDoctrine()->getRepository(Appointment::class)->getThisWeekAppointments();
+        $chartDataAppointmentBarber = $this->getDoctrine()->getRepository(Appointment::class)->getTodayAppointmentsBarber();
         $todayList = $this->getDoctrine()->getRepository(Appointment::class)->getTodayAppointments();
 
-        $data = [['Day','Appointments']];
+        $data = [['Day','RDV']];
         foreach($chartData as $dt)
         {
             $data[] = array(
@@ -39,14 +47,28 @@ class DashboardController extends AbstractDashboardController
         }
         $chart = new ColumnChart();
         $chart->getData()->setArrayToDataTable($data);
-
-        $chart->getOptions()->setTitle('RDV de la semaine');
         $chart->getOptions()->getAnnotations()->setAlwaysOutside(False);
         $chart->getOptions()->getAnnotations()->getTextStyle()->setFontSize(14);
         $chart->getOptions()->getAnnotations()->getTextStyle()->setColor('#000');
         $chart->getOptions()->getAnnotations()->getTextStyle()->setAuraColor('none');
         $chart->getOptions()->setWidth(530);
         $chart->getOptions()->setHeight(250);
+
+        $dataToday = [['Name','RDV']];
+        foreach($chartDataAppointmentBarber as $dt)
+        {
+            $dataToday[] = array(
+                $dt['name'], (int)$dt['count']
+            );
+        }
+        $chartToday = new ColumnChart();
+        $chartToday->getData()->setArrayToDataTable($dataToday);
+        $chartToday->getOptions()->getAnnotations()->setAlwaysOutside(False);
+        $chartToday->getOptions()->getAnnotations()->getTextStyle()->setFontSize(14);
+        $chartToday->getOptions()->getAnnotations()->getTextStyle()->setColor('#000');
+        $chartToday->getOptions()->getAnnotations()->getTextStyle()->setAuraColor('none');
+        $chartToday->getOptions()->setWidth(530);
+        $chartToday->getOptions()->setHeight(250);
 
         return $this->render('admin/main.html.twig',[
            'barbers' => $barbers,
@@ -56,6 +78,8 @@ class DashboardController extends AbstractDashboardController
             'thisWeekAppointments' =>$thisWeekAppointments,
             'chart' => $chart,
             'todayList' =>$todayList,
+            'chartToday' => $chartToday,
+            'now' =>$now,
      //       'appointmentLast30Days' => $appointmentLast30Days,
       //      'appointmentLast30DaysSum' => array_sum($appointmentLast30Days),
         ]);
@@ -116,6 +140,7 @@ class DashboardController extends AbstractDashboardController
         ];
 
     }
+
 
 
 }

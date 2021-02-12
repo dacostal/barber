@@ -8,18 +8,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-/**
- * Class ServiceController
- * @package App\Controller
- * @Route("/Service", name="Service_")
- */
-
 
 class ServiceController extends AbstractController
 {
+
     /**
      * @Route("/service", name="service")
      */
+
+
     public function index(): Response
     {
 

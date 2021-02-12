@@ -48,6 +48,7 @@ class AppointmentRepository extends ServiceEntityRepository
                 INNER JOIN service s
                 ON a.service_id = s.id
                 WHERE a.date = CURRENT_DATE ;
+                ORDER BY a.start_time
                 ';
         $stmt = $conn->prepare($sql);
         $stmt->execute();
@@ -81,6 +82,29 @@ class AppointmentRepository extends ServiceEntityRepository
             ORDER BY DAYOFWEEK(a.date)
 
             ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAllAssociative();
+
+    }
+
+
+    public function getTodayAppointmentsBarber() : array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT b.first_name name, COUNT(a.id) count FROM user b
+                LEFT OUTER JOIN appointment a ON b.id=a.barber_id
+                WHERE a.date=CURRENT_DATE
+                GROUP BY b.first_name
+
+                UNION 
+
+                SELECT b.first_name name, COUNT(a.id) count FROM user b
+                LEFT OUTER JOIN appointment a ON b.id=a.barber_id
+                GROUP BY b.first_name
+                HAVING COUNT(a.id)=0
+
+                ';
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAllAssociative();
