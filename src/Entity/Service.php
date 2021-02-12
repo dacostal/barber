@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ServiceRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ServiceRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=ServiceRepository::class)
@@ -59,8 +60,14 @@ class Service
      */
     private $barbers;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $category;
+
     public function __construct()
     {
+        $this->setCreatedAt( new \DateTime('now'));
         $this->appointments = new ArrayCollection();
         $this->barbers = new ArrayCollection();
     }
@@ -143,14 +150,14 @@ class Service
     }
 
     /**
-     * @return Collection|appointment[]
+     * @return Collection|Appointment[]
      */
     public function getAppointments(): Collection
     {
         return $this->appointments;
     }
 
-    public function addAppointment(appointment $appointment): self
+    public function addAppointment(Appointment $appointment): self
     {
         if (!$this->appointments->contains($appointment)) {
             $this->appointments[] = $appointment;
@@ -160,7 +167,7 @@ class Service
         return $this;
     }
 
-    public function removeAppointment(appointment $appointment): self
+    public function removeAppointment(Appointment $appointment): self
     {
         if ($this->appointments->removeElement($appointment)) {
             // set the owning side to null (unless already changed)
@@ -195,6 +202,18 @@ class Service
         if ($this->barbers->removeElement($barber)) {
             $barber->removeService($this);
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

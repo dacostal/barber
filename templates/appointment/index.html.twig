@@ -1,20 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AppointmentController!{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/service.css') }}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/chewbacca/src/Controller/AppointmentController.php'|file_link(0) }}">src/Controller/AppointmentController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/chewbacca/templates/appointment/index.html.twig'|file_link(0) }}">templates/appointment/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <p class="titre"> PRESTATIONS </p>
+
+    <div id="prestation">
+    {% for cat in categories %}
+        <div class="category">
+            <h3 class="category_titre">{{ cat.category|upper }}</h3>
+
+            <table class="table">
+                <tbody>
+                    {% for s in services %}
+                        {% if cat.category is same as s.category %}
+                            <tr>
+                                <td>{{ s.title }} <br> {{ s.description }} </td>
+                                <td>{{ s.time.format('H:i')}}</td>
+                                <td>{{ s.price }} euros</td>
+                                <td><a href="{{ path('reservation_id', {id: s.id}) }}">Choisir</a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
+    </div>
 {% endblock %}

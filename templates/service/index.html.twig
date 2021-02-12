@@ -1,169 +1,37 @@
 {% extends 'base.html.twig' %}
 
-
 {% block stylesheets %}
-    <style>
-        #prestation {
-
-            position:absolute;
-            height: 2000px; width:1200px;
-            padding: 30px;
-            margin: 50px 0px 15px 350px;
-            background-color: white;
-            opacity : 0.6;
-
-        }
-
-        #hair {
-
-            position:absolute;
-            height: 500px; width:1000px;
-            margin: 200px 50px 50px 450px;
-            padding: 30px;
-            background-color: whitesmoke;
-
-        }
-
-        #beard {
-
-            position:relative;
-            height: 500px; width:1000px;
-            margin: 850px 50px 50px 450px;
-            padding: 30px;
-            background-color: whitesmoke;
-
-        }
-
-        #combo {
-
-            position:relative;
-            height: 320px; width:1000px;
-            margin: 140px 50px 50px 450px;
-            padding: 30px;
-            background-color: whitesmoke;
-
-        }
-
-        .table {
-            margin-left: 15px;
-            position : center;
-        }
-
-        .titre {
-
-            margin-top: 200px;
-            padding: 20px;
-            font-size: 50px;
-            font-weight: bold;
-            text-align: center;
-            color: white;
-        }
-        .hair_titre {
-
-            font-weight: bold;
-            color: black;
-            font-size: 25px;
-            margin-left: 80px;
-            margin-top: 60px;
-            opacity: 1;
-
-        }
-        .beard_titre {
-
-            font-weight: bold;
-            color: black;
-            font-size: 25px;
-            margin-left: 80px;
-            margin-top: 600px;
-            opacity: 1;
-        }
-        .combo_titre {
-
-            font-weight: bold;
-            color: black;
-            font-size: 25px;
-            margin-left: 80px;
-            margin-top: 600px;
-            opacity: 1;
-        }
-    </style>
+    <link href="{{ asset('css/service.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
 
+    <!--<p class="hair_titre" >CHEWBACCA HAIR CUT "AUTOUR DES CHEVEUX"</p>
+    <p class="beard_titre">THE CHEWBACCA BEARD "AUTOUR DE LA BARBE" </p>
+    <p class="combo_titre"> COMBOS </p>-->
+
     <p class="titre"> PRESTATIONS </p>
+
     <div id="prestation">
-        <p class="hair_titre" >CHEWBACCA HAIR CUT "AUTOUR DES CHEVEUX"</p>
-        <p class="beard_titre">THE CHEWBACCA BEARD "AUTOUR DE LA BARBE" </p>
-        <p class="combo_titre"> COMBOS </p>
+    {% for cat in categories %}
+        <div class="category">
+            <h3 class="category_titre">{{ cat.category|upper }}</h3>
 
+            <table class="table">
+                <tbody>
+                    {% for s in services %}
+                        {% if cat.category is same as s.category %}
+                            <tr>
+                                <td>{{ s.title }} <br> {{ s.description }} </td>
+                                <td>{{ s.time.format('H:i')}}</td>
+                                <td>{{ s.price }} euros</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
     </div>
-    <div id="hair">
-        <table class="table">
-            <tbody>
-
-            {% for sv in service %}
-            {% if sv.id <= 5 %}
-
-            <tr>
-                <td>{{ sv.title }} <br> {{ sv.description }} </td>
-                <td>{{ sv.time.format('H:i')}}</td>
-                <td>{{ sv.price }} euros</td>
-
-            </tr>
-
-            {% endif %}
-            {% endfor %}
-
-            </tbody>
-        </table>
-
-    </div>
-
-
-    <div id="beard">
-        <table class="table">
-            <tbody>
-
-            {% for sv in service %}
-                {% if sv.id >5 and sv.id<=10 %}
-
-                    <tr>
-                        <td>{{ sv.title }} <br> {{ sv.description }} </td>
-                        <td>{{ sv.time.format('H:i')}}</td>
-                        <td>{{ sv.price }} euros</td>
-
-                    </tr>
-
-                {% endif %}
-            {% endfor %}
-
-            </tbody>
-        </table>
-
-    </div>
-
-    <div id="combo">
-        <table class="table">
-            <tbody>
-
-            {% for sv in service %}
-                {% if sv.id >10 %}
-
-                    <tr>
-                        <td>{{ sv.title }} <br> {{ sv.description }} </td>
-                        <td>{{ sv.time.format('H:i')}}</td>
-                        <td>{{ sv.price }} euros</td>
-
-                    </tr>
-
-                {% endif %}
-            {% endfor %}
-
-            </tbody>
-        </table>
-
-    </div>
-
 
 {% endblock %}

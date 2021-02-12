@@ -48,14 +48,14 @@ class Barber extends User
     }
 
     /**
-     * @return Collection|appointment[]
+     * @return Collection|Appointment[]
      */
     public function getAppointments(): Collection
     {
         return $this->appointments;
     }
 
-    public function addAppointment(appointment $appointment): self
+    public function addAppointment(Appointment $appointment): self
     {
         if (!$this->appointments->contains($appointment)) {
             $this->appointments[] = $appointment;
@@ -65,7 +65,7 @@ class Barber extends User
         return $this;
     }
 
-    public function removeAppointment(appointment $appointment): self
+    public function removeAppointment(Appointment $appointment): self
     {
         if ($this->appointment->removeElement($appointment)) {
             // set the owning side to null (unless already changed)
@@ -78,14 +78,14 @@ class Barber extends User
     }
 
     /**
-     * @return Collection|service[]
+     * @return Collection|Service[]
      */
     public function getServices(): Collection
     {
         return $this->services;
     }
 
-    public function addService(service $service): self
+    public function addService(Service $service): self
     {
         if (!$this->services->contains($service)) {
             $this->services[] = $service;
@@ -94,7 +94,7 @@ class Barber extends User
         return $this;
     }
 
-    public function removeService(service $service): self
+    public function removeService(Service $service): self
     {
         $this->services->removeElement($service);
 
