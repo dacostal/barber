@@ -24,7 +24,7 @@ class AppointmentController extends AbstractController
     }
 
     /**
-     * @Route("/reservation/{id}}", name="reservation_id")
+     * @Route("/reservation/{id}", name="reservation_id")
      * @param ServiceRepository $serviceRepository
      * @return Response
      */
