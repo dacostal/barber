@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ServiceRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ServiceRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=ServiceRepository::class)
@@ -66,6 +67,7 @@ class Service
 
     public function __construct()
     {
+        $this->setCreatedAt( new \DateTime('now'));
         $this->appointments = new ArrayCollection();
         $this->barbers = new ArrayCollection();
     }
