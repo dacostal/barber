@@ -10,6 +10,10 @@
             <p class="text-danger">{{ error }}</p>
         {% endif %}
 
+        {% for message in app.flashes('success') %}
+            <p class="text-success">{{ message }}</p>
+        {% endfor %}
+
         <label for="inputEmail">E-mail</label>
         <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control {% if error %}is-invalid{% endif %}" required autofocus>
 

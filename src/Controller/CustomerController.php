@@ -54,6 +54,8 @@ class CustomerController extends AbstractController
             $entityManager->persist($customer);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Inscription réussie !');
+
             return $this->redirectToRoute('app_login');
         }
 
