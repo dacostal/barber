@@ -1,0 +1,66 @@
+div.main {
+    width: 100%;
+}
+div.left {
+    padding : 50px 0 50px 50px;
+    width: 50%;
+    float: left;
+    align-items: center;
+}
+
+.left.cards {
+    align-items:center;
+}
+.card-body2 {
+    margin:0 auto;
+}
+
+div.right {
+    padding : 50px 50px 50px 0;
+    width: 50%;
+    float: right;
+
+
+}
+.cards {
+    margin : 10px 50px 70px 90px;
+
+
+}
+.card{
+    margin-top: 80px;
+}
+.table_wrapper {
+    overflow: scroll;
+    overflow-x:hidden;
+    width : 100%;
+    height : 300px;
+}
+.card-title{
+    font-weight: bold;
+    font-size: 25px;
+    text-align: center;
+    margin-top: 20px;
+}
+.card-subtitle {
+    margin-top : 10px;
+    text-align: center;
+}
+.table {
+    margin : 10px 10px 10px 10px;
+    table-layout: fixed;
+    width: 98%;
+    position : center;
+
+}
+#div_chart {
+    margin:0 auto;
+}
+#div_chart2 {
+    margin:0 auto;
+
+}
+.card-link2 {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
