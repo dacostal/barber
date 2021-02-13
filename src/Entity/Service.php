@@ -167,6 +167,8 @@ class Service
         return $this;
     }
 
+
+
     public function removeAppointment(Appointment $appointment): self
     {
         if ($this->appointments->removeElement($appointment)) {
@@ -216,5 +218,10 @@ class Service
         $this->category = $category;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }

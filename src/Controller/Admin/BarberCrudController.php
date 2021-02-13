@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Barber;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
@@ -34,14 +35,7 @@ class BarberCrudController extends AbstractCrudController
 
             FormField::addPanel('Service'),
 
-            ChoiceField::new('services', 'My services')->hideOnIndex()->setChoices ([
-                'test' => 'test',
-                'test' => 'test',
-            ])->setFormTypeOptions([
-                'required' => false,
-                'multiple' => false,
-                'expanded' => false,
-            ]),
+            AssociationField::new('services'),
 
             DateTimeField::new('createdAt')->hideOnForm(),
             DateTimeField::new('deletedAt')->hideOnForm(),

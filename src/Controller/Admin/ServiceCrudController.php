@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Service;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
@@ -27,6 +28,8 @@ class ServiceCrudController extends AbstractCrudController
             FormField::addPanel('Details'),
             TimeField::new('Time') ,
             Field::new('Price'),
+            FormField::addPanel('Barbers'),
+            AssociationField::new('barbers'),
             DateTimeField::new('createdAt')->hideOnForm(),
             DateTimeField::new('deletedAt')->hideOnForm(),
         ];

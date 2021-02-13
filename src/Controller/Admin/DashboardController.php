@@ -20,8 +20,6 @@ class DashboardController extends AbstractDashboardController
      * @Route("/admin", name="admin")
      */
 
-
-
     public function index(): Response
     {
 
@@ -80,33 +78,9 @@ class DashboardController extends AbstractDashboardController
             'todayList' =>$todayList,
             'chartToday' => $chartToday,
             'now' =>$now,
-     //       'appointmentLast30Days' => $appointmentLast30Days,
-      //      'appointmentLast30DaysSum' => array_sum($appointmentLast30Days),
         ]);
     }
-/*
-    private function getAppointmentLastDays(): array
-    {
-        $appointmentLast30Days = $this->getDoctrine()->getRepository(Appointment::class)->getAppointmentLastDays();
-        $r = [];
-        $begin = new \DateTime('-'.$days.' day');
-        $end = new \DateTime();
 
-        $interval = \DateInterval::createFromDateString('1 day');
-        $period = new \DatePeriod($begin, $interval, $end);
-
-        foreach ($period as $dt) {
-            $r[$dt->format("Y-m-d")] = 0;
-        }
-        foreach ($appointmentLast30Days as $appointmentLast30Day) {
-            $r[$appointmentLast30Day->d] = $appointmentLast30Day->num;
-        }
-
-        ksort($r);
-
-        return $r;
-    }
-*/
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -116,7 +90,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         return [
-            MenuItem::linkToDashboard('Page administration', 'fa fa-home'),
+            MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
 
             MenuItem::subMenu('Barber', 'fas fa-user')->setSubItems([
 
@@ -134,8 +108,6 @@ class DashboardController extends AbstractDashboardController
                     ->setAction('new'),
             ]),
 
-            MenuItem::linkToDashboard('Appointment', 'fas fa-archive', Appointment::class),
-            //MenuItem::linkToLogout('Logout', 'fa fa-exit'),
 
         ];
 
