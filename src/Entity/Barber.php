@@ -100,4 +100,6 @@ class Barber extends User
 
         return $this;
     }
+
+
 }

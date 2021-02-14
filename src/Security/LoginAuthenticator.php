@@ -101,7 +101,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
         }
 
         // redirect to services_selection route
-        return new RedirectResponse($this->urlGenerator->generate('services_selection'));
+        return new RedirectResponse($this->urlGenerator->generate('reservation'));
     }
 
     protected function getLoginUrl(): string
