@@ -38,6 +38,8 @@ class Availability
      */
     private $barber;
 
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -78,4 +80,6 @@ class Availability
 
         return $this;
     }
+
+
 }

@@ -28,10 +28,16 @@ class Barber extends User
      */
     private $services;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Availability::class, mappedBy="barber")
+     */
+    private $availabilities;
+
     public function __construct()
     {
         $this->appointments = new ArrayCollection();
         $this->services = new ArrayCollection();
+        $this->availabilities = new ArrayCollection();
     }
 
 
@@ -97,6 +103,36 @@ class Barber extends User
     public function removeService(Service $service): self
     {
         $this->services->removeElement($service);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Availability[]
+     */
+    public function getAvailabilities(): Collection
+    {
+        return $this->availabilities;
+    }
+
+    public function addAvailability(Availability $availability): self
+    {
+        if (!$this->availabilities->contains($availability)) {
+            $this->availabilities[] = $availability;
+            $availability->setBarber($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvailability(Availability $availability): self
+    {
+        if ($this->availabilities->removeElement($availability)) {
+            // set the owning side to null (unless already changed)
+            if ($availability->getBarber() === $this) {
+                $availability->setBarber(null);
+            }
+        }
 
         return $this;
     }

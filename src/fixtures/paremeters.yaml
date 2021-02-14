@@ -1,0 +1,4 @@
+
+parameters:
+    app.alice.parameters.parameter1: something
+    app.alice.parameters.parameter2: something else

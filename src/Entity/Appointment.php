@@ -56,7 +56,7 @@ class Appointment
     private $customer;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Barber::class, inversedBy="appointment")
+     * @ORM\ManyToOne(targetEntity=Barber::class, inversedBy="appointments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $barber;
