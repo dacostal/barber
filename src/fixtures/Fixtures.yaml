@@ -1,7 +1,0 @@
-# fixtures/parameters.yaml
-App\Entity\Service:
-    service{1..100}:
-        title: <sentence(2)>
-        description: <sentence(4)>
-        time: <(new \DateTime('00:30:00'))>
-        category: <{app.alice.parameters.parameter1}>
