@@ -18,7 +18,7 @@ class CalendarSubscriber implements EventSubscriberInterface
         AppointmentRepository $appointmentRepository,
         UrlGeneratorInterface $router
     ) {
-        $this->$appointmentRepository = $appointmentRepository;
+        $this->appointmentRepository = $appointmentRepository;
         $this->router = $router;
     }
 
