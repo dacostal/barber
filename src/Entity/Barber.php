@@ -35,6 +35,7 @@ class Barber extends User
 
     public function __construct()
     {
+        $this->setCreatedAt( new \DateTime('now'));
         $this->appointments = new ArrayCollection();
         $this->services = new ArrayCollection();
         $this->availabilities = new ArrayCollection();

@@ -40,7 +40,9 @@ class Customer extends User
 
     public function __construct()
     {
+        $this->setCreatedAt( new \DateTime('now'));
         $this->appointments = new ArrayCollection();
+       
     }
 
 
