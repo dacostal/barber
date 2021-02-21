@@ -1,13 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Customer{% endblock %}
+{% block title %}{{ parent() }}Modifier mes informations{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        footer{
+            position: static !important;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Customer</h1>
 
-    {{ include('customer/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ form_start(form, {'attr': {'class': 'w-50 mx-auto jumbotron bg-white'}}) }}
+        <h1 class="text-center">Modifier mes informations</h1>
 
-    <a href="{{ path('customer_index') }}">back to list</a>
+        <div class="form-row">
+            <div class="col">
+                {{ form_label(form.firstName) }}
+                {{ form_widget(form.firstName) }}
+            </div>
+            <div class="col">
+                {{ form_label(form.lastName) }}
+                {{ form_widget(form.lastName) }}
+            </div>
+        </div>
 
-    {{ include('customer/_delete_form.html.twig') }}
+        {{ form_label(form.phone) }}
+        {{ form_widget(form.phone) }}
+
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email) }}
+
+        {{ form_label(form.address) }}
+        {{ form_widget(form.address) }}
+
+        <div class="form-row">
+            <div class="col-3">
+                {{ form_label(form.zipcode) }}
+                {{ form_widget(form.zipcode) }}
+            </div>
+            <div class="col">
+                {{ form_label(form.city) }}
+                {{ form_widget(form.city) }}
+            </div>
+        </div>
+
+        <button class="btn btn-primary mt-4" type="submit">
+            <em class="fas fa-check"></em> Enregistrer mes informations
+        </button>
+        <a class="btn btn-secondary mt-4" href="{{ path('customer_read', {'id': customer.id}) }}">
+            <em class="fas fa-arrow-alt-circle-left"></em> Retour
+        </a>
+    {{ form_end(form) }}
+
 {% endblock %}
