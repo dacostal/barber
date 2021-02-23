@@ -101,6 +101,7 @@ class AppointmentRepository extends ServiceEntityRepository
 
                 SELECT b.first_name name, COUNT(a.id) count FROM user b
                 LEFT OUTER JOIN appointment a ON b.id=a.barber_id
+                WHERE b.type= "barber"
                 GROUP BY b.first_name
                 HAVING COUNT(a.id)=0
 
