@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Service;
+use App\Repository\AppointmentRepository;
 use App\Repository\ServiceRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,5 +39,17 @@ class AppointmentController extends AbstractController
             'services' => $serviceRepository->findAll(),
         ]);
     }
+
+
+    /**
+     * @Route("/calendar", name="appointment_calendar", methods={"GET"})
+     */
+    public function calendar(AppointmentRepository $Appointment): Response
+    {
+        $events = $Appointment->findAll();
+        dd($events);
+        return $this->render('appointment/calendar.html.twig');
+    }
+
 
 }

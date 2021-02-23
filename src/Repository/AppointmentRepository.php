@@ -47,7 +47,7 @@ class AppointmentRepository extends ServiceEntityRepository
                 ON a.barber_id = b.id
                 INNER JOIN service s
                 ON a.service_id = s.id
-                WHERE a.date = CURRENT_DATE ;
+                WHERE a.date = CURRENT_DATE
                 ORDER BY a.start_time
                 ';
         $stmt = $conn->prepare($sql);

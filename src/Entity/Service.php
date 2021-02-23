@@ -36,7 +36,7 @@ class Service
     private $time;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2,  nullable=true)
      */
     private $price;
 
