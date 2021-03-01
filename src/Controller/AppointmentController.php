@@ -46,9 +46,23 @@ class AppointmentController extends AbstractController
      */
     public function calendar(AppointmentRepository $Appointment): Response
     {
-        $events = $Appointment->findAll();
-        dd($events);
-        return $this->render('appointment/calendar.html.twig');
+        $appointments = $Appointment->findAll();
+        foreach($appointments as $appointment) {
+            $rdvs[] = [
+                'id'=> $appointment->getId(),
+
+                'start'=>$appointment->getDate()->format('Y-m-d H:i:s'),
+                'end'=>$appointment->getDate()->format('Y-m-d H:i:s'),
+                'canceled'=>$appointment->getCanceled(),
+                'customerId'=>$appointment->getCustomer()->getFirstName(),
+                'barberId'=>$appointment->getBarber()->getFirstName(),
+                'title'=>$appointment->getService()->getTitle(),
+
+            ];
+
+        }
+        $data = json_encode($rdvs);
+        return $this->render('appointment/calendar.html.twig', compact('data'));
     }
 
 

@@ -5,7 +5,7 @@
 
 {% block body %}
 
-
+    {{ dump(data) }}
     <div id="calendar-holder"></div>
 {% endblock %}
 
@@ -42,6 +42,7 @@
                 locale: 'fr',
                 timezone : 'Europe/Paris',
                 editable: true,
+                events : {{ data|raw  }},
                 eventSources: [
                     {
                         url: "{{ path('fc_load_events') }}",
@@ -59,8 +60,9 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay',
                 },
+
                 plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
-                timeZone: 'UTC',
+
             });
             calendar.render();
         });

@@ -56,7 +56,7 @@ class Service
     private $appointments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Barber::class, mappedBy="services")
+     * @ORM\ManyToMany(targetEntity=Barber::class, mappedBy="services", inversedBy="services", cascade={"remove"})
      */
     private $barbers;
 
