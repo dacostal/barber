@@ -6,10 +6,10 @@ use App\Entity\Customer;
 use App\Form\CustomerType;
 use App\Form\CustomerUpdatePwdType;
 use App\Form\CustomerUpdateType;
-use App\Repository\CustomerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -97,24 +97,20 @@ class CustomerController extends AbstractController
     /**
      * @Route("/{id}/update_pwd", name="customer_update_pwd", methods={"GET","POST"})
      * @param Request $request
-     * @param Customer $customer
      * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param Customer $customer
      * @return Response
      */
-    public function update_pwd(Request $request, Customer $customer, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function update_pwd(Request $request, UserPasswordEncoderInterface $passwordEncoder, Customer $customer): Response
     {
+        $oldPassword = $customer->getPassword();
+
         $form = $this->createForm(CustomerUpdatePwdType::class, $customer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
 
-            $oldPassword = $passwordEncoder->encodePassword(
-                $customer,
-                $form->get('oldPassword')->getData()
-            );
-
-            if($oldPassword === $customer->getPassword()) {
+            if (password_verify($form->get('oldPassword')->getData(), $oldPassword)) {
 
                 $customer->setPassword(
                     $passwordEncoder->encodePassword(
@@ -123,8 +119,7 @@ class CustomerController extends AbstractController
                     )
                 );
 
-                $entityManager->persist($customer);
-                $entityManager->flush();
+                $this->getDoctrine()->getManager()->flush();
 
                 $this->addFlash('success', 'Votre nouveau mot de passe a bien été enregistré.');
 
@@ -145,17 +140,20 @@ class CustomerController extends AbstractController
     /**
      * @Route("/{id}/delete", name="customer_delete", methods={"DELETE"})
      * @param Request $request
+     * @param SessionInterface $session
      * @param Customer $customer
      * @return Response
      */
-    public function delete(Request $request, Customer $customer): Response
+    public function delete(Request $request, SessionInterface $session, Customer $customer): Response
     {
+        $session->invalidate();
+
         if ($this->isCsrfTokenValid('delete'.$customer->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($customer);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('app_logout');
     }
 }
