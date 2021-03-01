@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Barber;
+use DateTime;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -24,21 +25,21 @@ class BarberCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            FormField::addPanel('Barber'),
-            Field::new('FirstName'),
+            FormField::addPanel('Personal Information'),
+            Field::new('FirstName','Name'),
+            Field::new('Password'),
 
             FormField::addPanel('Contact information')
-                ->setIcon('Phone')->addCssClass('optional')
-                ->setHelp('Phone number is preferred'),
-            TelephoneField::new('Phone'),
+                ->setIcon('Phone')->addCssClass('optional'),
+            TelephoneField::new('Phone','Phone number'),
             EmailField::new('Email'),
 
-            FormField::addPanel('Service'),
+            FormField::addPanel('Services'),
 
             AssociationField::new('services'),
-
-            DateTimeField::new('createdAt')->hideOnForm(),
+            DateTimeField::new('createdAt'),
             DateTimeField::new('deletedAt')->hideOnForm(),
+            Field::new('isAdmin','Administrator'),
         ];
     }
 

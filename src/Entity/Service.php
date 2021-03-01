@@ -36,7 +36,7 @@ class Service
     private $time;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2,  nullable=true)
      */
     private $price;
 
@@ -56,7 +56,7 @@ class Service
     private $appointments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Barber::class, mappedBy="services")
+     * @ORM\ManyToMany(targetEntity=Barber::class, mappedBy="services", inversedBy="services", cascade={"remove"})
      */
     private $barbers;
 

@@ -34,39 +34,41 @@ class CalendarSubscriber implements EventSubscriberInterface
         $start = $calendar->getStart();
         $end = $calendar->getEnd();
         $filters = $calendar->getFilters();
+        $filters['property-index'];
 
         // Modify the query to fit to your entity and needs
-        // Change booking.beginAt by your start date property
-        $bookings = $this->appointmentRepository
-            ->createQueryBuilder('booking')
-            ->where('booking.beginAt BETWEEN :start and :end OR booking.endAt BETWEEN :start and :end')
+        // Change appointment.beginAt by your start date property
+        $appointments = $this->appointmentRepository
+            ->createQueryBuilder('Appointment')
+            ->where('appointment.startTime BETWEEN :start and :end OR appointment.endTime BETWEEN :start and :end')
             ->setParameter('start', $start->format('Y-m-d H:i:s'))
             ->setParameter('end', $end->format('Y-m-d H:i:s'))
             ->getQuery()
             ->getResult()
         ;
 
-        foreach ($bookings as $booking) {
-            // this create the events with your data (here booking data) to fill calendar
-            $bookingEvent = new Event(
-                $booking->getTitle(),
-                $booking->getBeginAt(),
-                $booking->getEndAt() // If the end date is null or not defined, a all day event is created.
+        foreach ($appointments as $appointment) {
+            // this create the events with your data (here appointment data) to fill calendar
+            $appointmentEvent = new Event(
+                $appointment->getService(),
+                $appointment->getStartTime()->format('Y-m-d H:i:s'),
+                $appointment->getEndTime()->format('Y-m-d H:i:s') // If the end date is null or not defined, a all day event is created.
             );
 
-            $bookingEvent->setOptions([
+
+            $appointmentEvent->setOptions([
                 'backgroundColor' => 'red',
                 'borderColor' => 'red',
             ]);
-            $bookingEvent->addOption(
+            $appointmentEvent->addOption(
                 'url',
-                $this->router->generate('booking_show', [
-                    'id' => $booking->getId(),
+                $this->router->generate('appointment_show', [
+                    'id' => $appointment->getId(),
                 ])
             );
 
             // finally, add the event to the CalendarEvent to fill the calendar
-            $calendar->addEvent($bookingEvent);
+            $calendar->addEvent($appointmentEvent);
         }
     }
 }

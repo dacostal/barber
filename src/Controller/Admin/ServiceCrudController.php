@@ -6,6 +6,7 @@ use App\Entity\Service;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
@@ -26,12 +27,13 @@ class ServiceCrudController extends AbstractCrudController
             Field::new('Title'),
             TextareaField::new('Description'),
             FormField::addPanel('Details'),
-            TimeField::new('Time') ,
-            Field::new('Price'),
+            TimeField::new('Time')->setFormat('HH:mm'),
+            MoneyField::new('Price')->setCurrency('EUR'),
             FormField::addPanel('Barbers'),
             AssociationField::new('barbers'),
-            DateTimeField::new('createdAt')->hideOnForm(),
+            DateTimeField::new('createdAt'),
             DateTimeField::new('deletedAt')->hideOnForm(),
+            Field::new('category'),
         ];
     }
 
