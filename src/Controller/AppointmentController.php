@@ -4,16 +4,16 @@ namespace App\Controller;
 
 
 use App\Entity\Service;
-use App\Repository\ServiceRepository;
+use App\Repository\BarberRepository;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ServiceRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AppointmentController extends AbstractController
 {
     /**
-
      * @Route("/reservation", name="reservation")
      * @param ServiceRepository $serviceRepository
      * @return Response
@@ -31,11 +31,10 @@ class AppointmentController extends AbstractController
      * @param ServiceRepository $serviceRepository
      * @return Response
      */
-    public function choiceBarber($id, ServiceRepository $serviceRepository): Response
+    public function choiceBarber(Service $service, BarberRepository $barberRepository): Response
     {
-        return $this->render('appointment/index.html.twig', [
-            'categories' => $serviceRepository->allCategories(),
-            'services' => $serviceRepository->findAll(),
+        return $this->render('appointment/reservation.html.twig', [
+            'barbers' => $barberRepository->findByService($service),
         ]);
     }
 
