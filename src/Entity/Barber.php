@@ -29,7 +29,7 @@ class Barber extends User
     private $services;
 
     /**
-     * @ORM\OneToMany(targetEntity=Availability::class, mappedBy="barber")
+     * @ORM\ManyToMany(targetEntity=Availability::class, inversedBy="barbers")
      */
     private $availabilities;
 
@@ -120,7 +120,6 @@ class Barber extends User
     {
         if (!$this->availabilities->contains($availability)) {
             $this->availabilities[] = $availability;
-            $availability->setBarber($this);
         }
 
         return $this;
@@ -128,15 +127,9 @@ class Barber extends User
 
     public function removeAvailability(Availability $availability): self
     {
-        if ($this->availabilities->removeElement($availability)) {
-            // set the owning side to null (unless already changed)
-            if ($availability->getBarber() === $this) {
-                $availability->setBarber(null);
-            }
-        }
+        $this->availabilities->removeElement($availability);
 
         return $this;
     }
-
 
 }

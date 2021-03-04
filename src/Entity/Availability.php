@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AvailabilityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,12 +35,14 @@ class Availability
     private $endTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Barber::class, inversedBy="availabilities")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity=Barber::class, mappedBy="availabilities")
      */
-    private $barber;
+    private $barbers;
 
-    
+    public function __construct()
+    {
+        $this->barbers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,14 +73,29 @@ class Availability
         return $this;
     }
 
-    public function getBarber(): ?Barber
+    /**
+     * @return Collection|Barber[]
+     */
+    public function getBarbers(): Collection
     {
-        return $this->barber;
+        return $this->barbers;
     }
 
-    public function setBarber(?Barber $barber): self
+    public function addBarber(Barber $barber): self
     {
-        $this->barber = $barber;
+        if (!$this->barbers->contains($barber)) {
+            $this->barbers[] = $barber;
+            $barber->addAvailability($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBarber(Barber $barber): self
+    {
+        if ($this->barbers->removeElement($barber)) {
+            $barber->removeAvailability($this);
+        }
 
         return $this;
     }
