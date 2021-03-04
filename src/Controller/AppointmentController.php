@@ -47,17 +47,22 @@ class AppointmentController extends AbstractController
     public function calendar(AppointmentRepository $Appointment): Response
     {
         $appointments = $Appointment->findAll();
+
         foreach($appointments as $appointment) {
+
+            $startDate = $appointment->getDate()->format('Y-m-d');
+            $startTime = $appointment->getStartTime()->format('H:i:s');
+            $combinedStartDT = date('Y-m-d H:i:s', strtotime("$startDate $startTime"));
+            $endDate = $appointment->getDate()->format('Y-m-d');
+            $endTime = $appointment->getEndTime()->format('H:i:s');
+            $combinedEndDT = date('Y-m-d H:i:s', strtotime("$endDate $endTime"));
             $rdvs[] = [
                 'id'=> $appointment->getId(),
-
-                'start'=>$appointment->getDate()->format('Y-m-d H:i:s'),
-                'end'=>$appointment->getDate()->format('Y-m-d H:i:s'),
-                'canceled'=>$appointment->getCanceled(),
-                'customerId'=>$appointment->getCustomer()->getFirstName(),
-                'barberId'=>$appointment->getBarber()->getFirstName(),
                 'title'=>$appointment->getService()->getTitle(),
-
+                'start'=>$combinedStartDT,
+                'end'=>$combinedEndDT,
+                'extendedProps'=>$appointment->getCustomer()->getFirstName(),
+                'barberId'=>$appointment->getBarber()->getFirstName(),
             ];
 
         }

@@ -97,13 +97,14 @@ class AppointmentRepository extends ServiceEntityRepository
                 WHERE b.type= "barber"
                 GROUP BY b.first_name
                 HAVING count =0
-                
+             
                 UNION
                 
                 SELECT b.first_name name,COUNT(a.date=CURRENT_DATE) FROM user b
                 LEFT OUTER JOIN appointment a ON b.id=a.barber_id
-                WHERE b.type= "barber"
+                WHERE b.type= "barber" AND a.date=CURRENT_DATE
                 GROUP BY b.first_name
+
 
                 ';
         $stmt = $conn->prepare($sql);
