@@ -39,9 +39,15 @@ class Availability
      */
     private $barbers;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Appointment::class, mappedBy="availabilities")
+     */
+    private $appointments;
+
     public function __construct()
     {
         $this->barbers = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,6 +101,33 @@ class Availability
     {
         if ($this->barbers->removeElement($barber)) {
             $barber->removeAvailability($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Appointment[]
+     */
+    public function getAppointments(): Collection
+    {
+        return $this->appointments;
+    }
+
+    public function addAppointment(Appointment $appointment): self
+    {
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments[] = $appointment;
+            $appointment->addAvailability($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppointment(Appointment $appointment): self
+    {
+        if ($this->appointments->removeElement($appointment)) {
+            $appointment->removeAvailability($this);
         }
 
         return $this;
