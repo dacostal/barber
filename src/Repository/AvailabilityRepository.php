@@ -22,6 +22,21 @@ class AvailabilityRepository extends ServiceEntityRepository
     // /**
     //  * @return Availability[] Returns an array of Availability objects
     //  */
+    public function findByBarber ($barber)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT a
+            FROM availability
+            WHERE barber_id = :id'
+        )->setParameter('id', $barber);
+
+        return $query->getResult();
+    }
+
+    // /**
+    //  * @return Availability[] Returns an array of Availability objects
+    //  */
     /*
     public function findByExampleField($value)
     {

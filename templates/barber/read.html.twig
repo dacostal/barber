@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Barber{% endblock %}
+
+{% block body %}
+    <h1>Barber</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ barber.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ barber.email }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ barber.roles ? barber.roles|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ barber.password }}</td>
+            </tr>
+            <tr>
+                <th>FirstName</th>
+                <td>{{ barber.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ barber.phone }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ barber.createdAt ? barber.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DeletedAt</th>
+                <td>{{ barber.deletedAt ? barber.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>IsAdmin</th>
+                <td>{{ barber.isAdmin ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('barber_index') }}">back to list</a>
+
+    <a href="{{ path('barber_edit', {'id': barber.id}) }}">edit</a>
+
+    {{ include('barber/_delete_form.html.twig') }}
+{% endblock %}
