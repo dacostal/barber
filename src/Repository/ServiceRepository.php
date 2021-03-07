@@ -19,18 +19,6 @@ class ServiceRepository extends ServiceEntityRepository
         parent::__construct($registry, Service::class);
     }
 
-    /**
-     * @return int|mixed|string
-     */
-    public function allCategories()
-    {
-        return $this->createQueryBuilder('s')
-            ->select('s.category')
-            ->groupBy('s.category')
-            ->getQuery()
-            ->getResult();
-    }
-
     // /**
     //  * @return Service[] Returns an array of Service objects
     //  */
