@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+    <link href="{{ asset('css/service.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+
+    <p class="titre"> PRESTATIONS </p>
+
+    <div id="prestation">
+    {% for cat in categories %}
+        <div class="category">
+            <h3 class="category_titre">{{ cat.category|upper }}</h3>
+
+            <table class="table">
+                <tbody>
+                    {% for s in services %}
+                        {% if cat.category is same as s.category %}
+                            <tr>
+                                <td>{{ s.title }} <br> {{ s.description }} </td>
+                                <td>{{ s.time.format('H:i')}}</td>
+                                <td>{{ s.price }} euros</td>
+                                <td><a href="{{ path('reservation_id', {id: s.id}) }}">Choisir</a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
