@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 11 fév. 2021 à 16:56
+-- Généré le : ven. 29 jan. 2021 à 09:14
 -- Version du serveur :  5.7.31
--- Version de PHP : 7.3.21
+-- Version de PHP : 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,9 +26,7 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `appointment`
 --
-DROP DATABASE IF EXISTS 'barber ';
-CREATE DATABASE 'barber';
-USE 'barber';
+
 DROP TABLE IF EXISTS `appointment`;
 CREATE TABLE IF NOT EXISTS `appointment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -45,17 +43,7 @@ CREATE TABLE IF NOT EXISTS `appointment` (
   KEY `IDX_FE38F8449395C3F3` (`customer_id`),
   KEY `IDX_FE38F844BFF2FEF2` (`barber_id`),
   KEY `IDX_FE38F844ED5CA9E6` (`service_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `appointment`
---
-
-INSERT INTO `appointment` (`id`, `date`, `start_time`, `end_time`, `canceled`, `created_at`, `deleted_at`, `customer_id`, `barber_id`, `service_id`) VALUES
-(2, '2021-02-12', '14:00:00', '14:30:00', 0, '2021-02-05 18:58:22', NULL, 1, 1, 1),
-(3, '2021-02-10', '14:00:00', '14:30:00', 0, '2021-02-05 18:59:41', NULL, 1, 1, 3),
-(4, '2021-02-09', '14:00:00', '14:30:00', 0, '2021-02-09 00:00:00', NULL, 1, 1, 3),
-(5, '2021-02-09', '16:00:00', '16:30:00', 0, '2021-02-09 00:00:00', NULL, 1, 1, 8);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -88,13 +76,6 @@ CREATE TABLE IF NOT EXISTS `barber` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Déchargement des données de la table `barber`
---
-
-INSERT INTO `barber` (`id`, `is_admin`) VALUES
-(1, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -125,13 +106,6 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `zipcode` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `customer`
---
-
-INSERT INTO `customer` (`id`, `last_name`, `address`, `city`, `zipcode`) VALUES
-(1, 'park', '1 rue blaise pascal', 'houilles', '78800');
 
 -- --------------------------------------------------------
 
@@ -175,30 +149,8 @@ CREATE TABLE IF NOT EXISTS `service` (
   `price` double NOT NULL,
   `created_at` datetime NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `service`
---
-
-INSERT INTO `service` (`id`, `title`, `description`, `time`, `price`, `created_at`, `deleted_at`, `category`) VALUES
-(1, 'Chewbacca Men', 'shampooing, coupe, coiffage', '00:30:00', 36, '2021-02-03 19:13:27', NULL, 'chewbacca hair cut \"autour des cheveux\"'),
-(2, 'Little Chewbacca', '-20ans', '00:30:00', 28, '2021-02-03 19:13:27', NULL, 'chewbacca hair cut \"autour des cheveux\"'),
-(3, 'Baby Chewbacca', '-12ans', '00:30:00', 25, '2021-02-03 19:13:27', NULL, 'chewbacca hair cut \"autour des cheveux\"'),
-(4, 'No Hair', 'rasage du crâne au coupe-chou', '00:45:00', 41, '2021-02-03 19:13:27', NULL, 'chewbacca hair cut \"autour des cheveux\"'),
-(5, 'Clippers Cut', 'coupe à la tondeuse', '00:30:00', 29, '2021-02-03 19:13:27', NULL, 'chewbacca hair cut \"autour des cheveux\"'),
-(6, 'Fresh Beard', 'taille de barbe simple', '00:30:00', 24, '2021-02-03 19:13:27', NULL, 'the chewbacca beard \"autour de la barbe\"'),
-(7, 'Chewbacca Beard', 'taille de barbe, finitions au coupe-chou', '00:15:00', 32, '2021-02-03 19:13:27', NULL, 'the chewbacca beard \"autour de la barbe\"'),
-(8, 'Best Mustache', 'taille de moustache', '00:15:00', 8, '2021-02-03 19:13:27', NULL, 'the chewbacca beard \"autour de la barbe\"'),
-(9, 'Dandy Beard', 'rasage à l\'ancienne à la vapeur', '01:00:00', 50, '2021-02-03 19:13:27', NULL, 'the chewbacca beard \"autour de la barbe\"'),
-(10, 'Styling Beard', 'brushing de barbe', '00:10:00', 12, '2021-02-03 19:13:27', NULL, 'the chewbacca beard \"autour de la barbe\"'),
-(11, 'Perfect Chewbacca', 'chewbacca men + chewbacca beard', '01:00:00', 62, '2021-02-03 19:13:27', NULL, 'combos'),
-(12, 'Gentlemen Chewbacca', 'chewbacca men + dandy beard', '01:30:00', 80, '2021-02-03 19:13:27', NULL, 'combos'),
-(13, 'Father & Son', 'coupe père & fils', '01:00:00', 55, '2021-02-03 19:13:28', NULL, 'combos'),
-(14, 'test hair', 'test', '00:30:00', 36, '2021-02-11 00:00:00', NULL, 'hair'),
-(15, 'test beard', 'beard', '00:30:00', 28, '2021-02-11 16:28:15', NULL, 'beard');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -219,14 +171,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `user`
---
-
-INSERT INTO `user` (`id`, `email`, `roles`, `password`, `first_name`, `phone`, `created_at`, `deleted_at`, `type`) VALUES
-(1, 'seohypark@gmail.com', '[]', 'seohyun', 'Seohyun', '0613570437', '2021-02-04 22:15:00', NULL, 'barber');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Contraintes pour les tables déchargées
