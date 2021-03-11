@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ app.user ? path('reservation') : path('app_login') }}">
                     <em class="fas fa-calendar-alt"></em> Prendre rendez-vous
                 </a>
             </li>
@@ -45,7 +45,7 @@
                     </a>
 
                     {% if app.user %}
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ path('customer_read', {'id': app.user.id}) }}">
                             <em class="far fa-user"></em> Mon compte
                         </a>
                         <a class="dropdown-item" href="{{ path('app_logout') }}">
