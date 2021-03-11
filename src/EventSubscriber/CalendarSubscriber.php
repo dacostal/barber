@@ -39,7 +39,7 @@ class CalendarSubscriber implements EventSubscriberInterface
         // Modify the query to fit to your entity and needs
         // Change appointment.beginAt by your start date property
         $appointments = $this->appointmentRepository
-            ->createQueryBuilder('Appointment')
+            ->createQueryBuilder('appointment')
             ->where('appointment.startTime BETWEEN :start and :end OR appointment.endTime BETWEEN :start and :end')
             ->setParameter('start', $start->format('Y-m-d H:i:s'))
             ->setParameter('end', $end->format('Y-m-d H:i:s'))
