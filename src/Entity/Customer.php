@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Customer extends User
 {
-
     /**
      * @ORM\Column(type="string", length=100)
      */

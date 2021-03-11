@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Barber extends User
 {
-    
     /**
      * @ORM\Column(type="boolean")
      */
@@ -131,5 +130,4 @@ class Barber extends User
 
         return $this;
     }
-
 }
