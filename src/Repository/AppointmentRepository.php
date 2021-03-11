@@ -96,8 +96,6 @@ class AppointmentRepository extends ServiceEntityRepository
                 LEFT OUTER JOIN appointment a ON b.id=a.barber_id
                 WHERE b.type= "barber"
                 GROUP BY b.first_name
-
-
                 ';
         $stmt = $conn->prepare($sql);
         $stmt->execute();
