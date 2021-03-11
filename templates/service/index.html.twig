@@ -6,10 +6,6 @@
 
 {% block body %}
 
-    <!--<p class="hair_titre" >CHEWBACCA HAIR CUT "AUTOUR DES CHEVEUX"</p>
-    <p class="beard_titre">THE CHEWBACCA BEARD "AUTOUR DE LA BARBE" </p>
-    <p class="combo_titre"> COMBOS </p>-->
-
     <p class="titre"> PRESTATIONS </p>
 
     <div id="prestation">
@@ -23,7 +19,7 @@
                         {% if cat.category is same as s.category %}
                             <tr>
                                 <td>{{ s.title }} <br> {{ s.description }} </td>
-                                <td>{{ s.time.format('H:i')}}</td>
+                                <td>{{ formatter.format(s.time.format('H:i:s')) }}</td>
                                 <td>{{ s.price }} euros</td>
                             </tr>
                         {% endif %}
