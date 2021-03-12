@@ -88,6 +88,4 @@ class AppointmentController extends AbstractController
         return $this->render('appointment/calendar.html.twig', compact('data'));
     }
 
-
-
 }
