@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}Modifier mon mot de passe{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        footer{
+            position: static !important;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form, {'attr': {'class': 'w-50 mx-auto jumbotron bg-white'}}) }}
+        <h1 class="text-center">Modifier mon mot de passe</h1>
+
+        {{ form_label(form.oldPassword) }}
+
+        {% for message in app.flashes('error') %}
+            <small class="text-danger">{{ message }}</small>
+        {% endfor %}
+
+        {{ form_widget(form.oldPassword) }}
+
+        {{ form_label(form.password.first) }}
+        {{ form_widget(form.password.first) }}
+
+        {{ form_label(form.password.second) }}
+
+        {% if form_errors(form.password.first) %}
+            <small class="text-danger">
+                {{ form.password.vars.errors.form.config.options['invalid_message'] }}
+            </small>
+        {% endif %}
+
+        {{ form_widget(form.password.second) }}
+
+        <button class="btn btn-primary mt-4" type="submit">
+            <em class="fas fa-check"></em> Modifier
+        </button>
+        <a class="btn btn-secondary mt-4" href="{{ path('customer_read', {'id': customer.id}) }}">
+            <em class="fas fa-arrow-alt-circle-left"></em> Retour
+        </a>
+    {{ form_end(form) }}
+
+{% endblock %}

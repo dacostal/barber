@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\Customer;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,13 +31,16 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $security;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator,
+        CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, Security $security)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->security = $security;
     }
 
     public function supports(Request $request): bool
@@ -100,8 +104,10 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
             return new RedirectResponse($targetPath);
         }
 
-        // redirect to services_selection route
-        return new RedirectResponse($this->urlGenerator->generate('reservation'));
+        // redirect to reservation route if customer or calendar route if barber
+        return $this->security->getUser() instanceof Customer
+            ? new RedirectResponse($this->urlGenerator->generate('reservation'))
+            : new RedirectResponse($this->urlGenerator->generate('calendar'));
     }
 
     protected function getLoginUrl(): string

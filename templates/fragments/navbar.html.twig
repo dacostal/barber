@@ -1,8 +1,9 @@
 <!-- barre de navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a class="navbar-brand" href="#">Chewbacca</a>
+    <a class="navbar-brand" href="{{ path('home') }}">Chewbacca</a>
 
     <div class="collapse navbar-collapse" id="navbarColor03">
+
         <!-- onglets alignés à gauche -->
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -24,16 +25,32 @@
 
         <!-- onglets alignés à droite -->
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_login') }}">
-                    <em class="fas fa-sign-in-alt"></em> Connexion
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <em class="fas fa-calendar-alt"></em> Prendre rendez-vous
-                </a>
-            </li>
+
+            {% if not app.user %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_login') }}">
+                        <em class="fas fa-sign-in-alt"></em> Connexion
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_login') }}">
+                        <em class="fas fa-calendar-alt"></em> Prendre rendez-vous
+                    </a>
+                </li>
+            {% elseif app.user.lastName is defined %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('reservation') }}">
+                        <em class="fas fa-calendar-alt"></em> Prendre rendez-vous
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('calendar') }}">
+                        <em class="fas fa-calendar-alt"></em> Mon agenda
+                    </a>
+                </li>
+            {% endif %}
+
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="true" aria-expanded="false">
@@ -45,7 +62,9 @@
                     </a>
 
                     {% if app.user %}
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ app.user.lastName is defined
+                            ? path('customer_read', {'id': app.user.id})
+                            : path('barber_read', {'id': app.user.id}) }}">
                             <em class="far fa-user"></em> Mon compte
                         </a>
                         <a class="dropdown-item" href="{{ path('app_logout') }}">
@@ -54,6 +73,7 @@
                     {% endif %}
                 </div>
             </li>
+
         </ul>
     </div>
 </nav>

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AvailabilityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,10 +12,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Availability
 {
-    //enum bdd day
-    const DAY = array("Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi");
-    //enum bdd Time of day
-    const TIME_OF_DAY = array("Matin","Après-midi");
+    const LUNDI = 'Lundi';
+    const MARDI = 'Mardi';
+    const MERCREDI = 'Mercredi';
+    const JEUDI = 'Jeudi';
+    const VENDREDI = 'Vendredi';
+    const SAMEDI = 'Samedi';
+
+    const MATIN = 'Matin';
+    const APRES_MIDI = 'Après-midi';
 
     /**
      * @ORM\Id
@@ -33,10 +40,30 @@ class Availability
     private $endTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Barber::class, inversedBy="availabilities")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity=Barber::class, mappedBy="availabilities")
      */
-    private $barber;
+    private $barbers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Appointment::class, mappedBy="availabilities")
+     */
+    private $appointments;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $day;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $timeOfDay;
+
+    public function __construct()
+    {
+        $this->barbers = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -67,15 +94,89 @@ class Availability
         return $this;
     }
 
-    public function getBarber(): ?Barber
+    /**
+     * @return Collection|Barber[]
+     */
+    public function getBarbers(): Collection
     {
-        return $this->barber;
+        return $this->barbers;
     }
 
-    public function setBarber(?Barber $barber): self
+    public function addBarber(Barber $barber): self
     {
-        $this->barber = $barber;
+        if (!$this->barbers->contains($barber)) {
+            $this->barbers[] = $barber;
+            $barber->addAvailability($this);
+        }
 
         return $this;
     }
+
+    public function removeBarber(Barber $barber): self
+    {
+        if ($this->barbers->removeElement($barber)) {
+            $barber->removeAvailability($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Appointment[]
+     */
+    public function getAppointments(): Collection
+    {
+        return $this->appointments;
+    }
+
+    public function addAppointment(Appointment $appointment): self
+    {
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments[] = $appointment;
+            $appointment->addAvailability($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppointment(Appointment $appointment): self
+    {
+        if ($this->appointments->removeElement($appointment)) {
+            $appointment->removeAvailability($this);
+        }
+
+        return $this;
+    }
+
+    public function getDay(): ?string
+    {
+        return $this->day;
+    }
+
+    public function setDay(string $day): self
+    {
+        if (!in_array($day, array(self::LUNDI, self::MARDI,self::MERCREDI,self::JEUDI,self::VENDREDI,self::SAMEDI,))) {
+            throw new \InvalidArgumentException("Invalid day");
+        }
+        $this->day = $day;
+
+        return $this;
+    }
+
+    public function getTimeOfDay(): ?string
+    {
+        return $this->timeOfDay;
+    }
+
+    public function setTimeOfDay(string $timeOfDay): self
+    {
+        if (!in_array($timeOfDay, array(self::MATIN, self::APRES_MIDI))) {
+            throw new \InvalidArgumentException("Invalid time of day");
+        }
+        $this->timeOfDay = $timeOfDay;
+
+        return $this;
+    }
+
+
 }
