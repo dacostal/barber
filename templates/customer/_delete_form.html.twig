@@ -1,5 +1,15 @@
-<form method="post" action="{{ path('customer_delete', {'id': customer.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ customer.id) }}">
-    <button class="btn">Delete</button>
-</form>
+<div class="alert alert-danger">
+    <h3 class="mb-4 alert-heading">Attention !</h3>
+
+    <p class="lead">Cette action est définitive.</p>
+
+    <form method="post" action="{{ path('customer_delete', {'id': customer.id}) }}"
+          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');">
+
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ customer.id) }}">
+        <button class="btn btn-danger" type="submit">
+            <em class="fas fa-times-circle"></em> Supprimer mon compte
+        </button>
+    </form>
+</div>

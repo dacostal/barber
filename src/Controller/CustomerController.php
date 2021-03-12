@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Customer;
 use App\Form\CustomerType;
-use App\Repository\CustomerRepository;
+use App\Form\CustomerUpdatePwdType;
+use App\Form\CustomerUpdateType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -16,18 +18,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class CustomerController extends AbstractController
 {
-    /**
-     * @Route("/", name="customer_index", methods={"GET"})
-     * @param CustomerRepository $customerRepository
-     * @return Response
-     */
-    public function index(CustomerRepository $customerRepository): Response
-    {
-        return $this->render('customer/index.html.twig', [
-            'customers' => $customerRepository->findAll(),
-        ]);
-    }
-
     /**
      * @Route("/create", name="customer_create", methods={"GET","POST"})
      * @param Request $request
@@ -85,13 +75,17 @@ class CustomerController extends AbstractController
      */
     public function update(Request $request, Customer $customer): Response
     {
-        $form = $this->createForm(CustomerType::class, $customer);
+        $form = $this->createForm(CustomerUpdateType::class, $customer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('customer_index');
+            $this->addFlash('success', 'Vos modifications ont bien été enregistrées.');
+
+            return $this->redirectToRoute('customer_read', [
+                'id' => $customer->getId(),
+            ]);
         }
 
         return $this->render('customer/update.html.twig', [
@@ -101,19 +95,65 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", name="customer_delete", methods={"DELETE"})
+     * @Route("/{id}/update_pwd", name="customer_update_pwd", methods={"GET","POST"})
      * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
      * @param Customer $customer
      * @return Response
      */
-    public function delete(Request $request, Customer $customer): Response
+    public function update_pwd(Request $request, UserPasswordEncoderInterface $passwordEncoder, Customer $customer): Response
     {
+        $oldPassword = $customer->getPassword();
+
+        $form = $this->createForm(CustomerUpdatePwdType::class, $customer);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if (password_verify($form->get('oldPassword')->getData(), $oldPassword)) {
+
+                $customer->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $customer,
+                        $form->get('password')->getData()
+                    )
+                );
+
+                $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash('success', 'Votre nouveau mot de passe a bien été enregistré.');
+
+                return $this->redirectToRoute('customer_read', [
+                    'id' => $customer->getId(),
+                ]);
+            }
+
+            $this->addFlash('error', 'Ancien mot de passe incorrect.');
+        }
+
+        return $this->render('customer/update_pwd.html.twig', [
+            'customer' => $customer,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/delete", name="customer_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param SessionInterface $session
+     * @param Customer $customer
+     * @return Response
+     */
+    public function delete(Request $request, SessionInterface $session, Customer $customer): Response
+    {
+        $session->invalidate();
+
         if ($this->isCsrfTokenValid('delete'.$customer->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($customer);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('customer_index');
+        return $this->redirectToRoute('app_logout');
     }
 }

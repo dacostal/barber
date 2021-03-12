@@ -1,66 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Customer{% endblock %}
+{% block title %}{{ parent() }}Mon compte{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        footer{
+            position: static !important;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    <h1>Customer</h1>
+    <div class="w-75 mx-auto jumbotron bg-white">
+        <h1 class="mb-5 text-center">Mes informations personnelles</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ customer.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ customer.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ customer.roles ? customer.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ customer.password }}</td>
-            </tr>
-            <tr>
-                <th>FirstName</th>
-                <td>{{ customer.firstName }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
-                <td>{{ customer.phone }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ customer.createdAt ? customer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>DeletedAt</th>
-                <td>{{ customer.deletedAt ? customer.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>LastName</th>
-                <td>{{ customer.lastName }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ customer.address }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ customer.city }}</td>
-            </tr>
-            <tr>
-                <th>Zipcode</th>
-                <td>{{ customer.zipcode }}</td>
-            </tr>
-        </tbody>
-    </table>
+        {% for message in app.flashes('success') %}
+            <p class="text-success">{{ message }}</p>
+        {% endfor %}
 
-    <a href="{{ path('customer_index') }}">back to list</a>
+        <table class="table table-active">
+            <tbody>
+                <tr>
+                    <th>Prénom</th>
+                    <td>{{ customer.firstName }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ customer.lastName }}</td>
+                </tr>
+                <tr>
+                    <th>Téléphone</th>
+                    <td>{{ customer.phone }}</td>
+                </tr>
+                <tr>
+                    <th>E-mail</th>
+                    <td>{{ customer.email }}</td>
+                </tr>
+                <tr>
+                    <th>Adresse</th>
+                    <td>{{ customer.address }}</td>
+                </tr>
+                <tr>
+                    <th>Code postal</th>
+                    <td>{{ customer.zipcode }}</td>
+                </tr>
+                <tr>
+                    <th>Ville</th>
+                    <td>{{ customer.city }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <a href="{{ path('customer_edit', {'id': customer.id}) }}">edit</a>
+        <a class="btn btn-primary mt-5" href="{{ path('customer_update', {'id': customer.id}) }}">
+            <em class="far fa-edit"></em> Modifier mes informations
+        </a>
+        <a class="btn btn-secondary mt-5" href="{{ path('customer_update_pwd', {'id': customer.id}) }}">
+            <em class="far fa-edit"></em> Modifier mon mot de passe
+        </a>
 
-    {{ include('customer/_delete_form.html.twig') }}
+        <hr class="my-5">
+
+        {{ include('customer/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

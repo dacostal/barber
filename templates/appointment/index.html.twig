@@ -1,12 +1,10 @@
 {% extends 'base.html.twig' %}
 
-
 {% block stylesheets %}
     <link href="{{ asset('css/service.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-
 
     <p class="titre"> PRESTATIONS </p>
 
@@ -21,7 +19,7 @@
                         {% if cat.category is same as s.category %}
                             <tr>
                                 <td>{{ s.title }} <br> {{ s.description }} </td>
-                                <td>{{ s.time.format('H:i')}}</td>
+                                <td>{{ formatter.format(s.time.format('H:i:s')) }}</td>
                                 <td>{{ s.price }} euros</td>
                                 <td><a href="{{ path('reservation_id', {id: s.id}) }}">Choisir</a></td>
                             </tr>
@@ -32,4 +30,5 @@
         </div>
     {% endfor %}
     </div>
+
 {% endblock %}

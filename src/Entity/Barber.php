@@ -14,7 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 class Barber extends User
 {
-    
     /**
      * @ORM\Column(type="boolean")
      */
@@ -32,10 +31,17 @@ class Barber extends User
      */
     private $services;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Availability::class, inversedBy="barbers")
+     */
+    private $availabilities;
+
     public function __construct()
     {
+        $this->setCreatedAt( new \DateTime('now'));
         $this->appointments = new ArrayCollection();
         $this->services = new ArrayCollection();
+        $this->availabilities = new ArrayCollection();
     }
 
 
@@ -105,5 +111,27 @@ class Barber extends User
         return $this;
     }
 
+    /**
+     * @return Collection|Availability[]
+     */
+    public function getAvailabilities(): Collection
+    {
+        return $this->availabilities;
+    }
 
+    public function addAvailability(Availability $availability): self
+    {
+        if (!$this->availabilities->contains($availability)) {
+            $this->availabilities[] = $availability;
+        }
+
+        return $this;
+    }
+
+    public function removeAvailability(Availability $availability): self
+    {
+        $this->availabilities->removeElement($availability);
+
+        return $this;
+    }
 }

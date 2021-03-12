@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Customer extends User
 {
-
     /**
      * @ORM\Column(type="string", length=100)
      */
@@ -40,7 +39,9 @@ class Customer extends User
 
     public function __construct()
     {
+        $this->setCreatedAt( new \DateTime('now'));
         $this->appointments = new ArrayCollection();
+       
     }
 
 
