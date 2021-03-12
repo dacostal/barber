@@ -9,7 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=BarberRepository::class)
+ *
  */
+
 class Barber extends User
 {
     /**
@@ -18,12 +20,14 @@ class Barber extends User
     private $isAdmin;
 
     /**
-     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="barber")
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="barber",cascade={"remove"})
+     *
      */
     private $appointments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Service::class, inversedBy="barbers")
+     * @ORM\ManyToMany(targetEntity=Service::class, inversedBy="barbers",cascade={"remove"})
+     *
      */
     private $services;
 

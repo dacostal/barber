@@ -1,13 +1,14 @@
 {% extends '@EasyAdmin/layout.html.twig' %}
 
 {% block main %}
-    
+
+
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 
     <h1 class="chewbacca">Today's Chewbacca</h1>
 
     <div class = "main">
-
+        <div id="calendar-holder"></div>
         <div class="left">
 
             <div class="cards">
@@ -134,3 +135,4 @@
     </div>
 
 {% endblock %}
+

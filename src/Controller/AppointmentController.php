@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Service;
+
+use App\Repository\AppointmentRepository;
+use App\Repository\ServiceRepository;
 use App\Repository\BarberRepository;
+
 
 use App\Repository\ServiceRepository;
 use App\Service\TimeFormatter;
@@ -40,4 +44,48 @@ class AppointmentController extends AbstractController
             'barbers' => $barberRepository->findByService($service),
         ]);
     }
+
+    /**
+     * @Route("/calendar", name="appointment_calendar", methods={"GET"})
+     */
+    public function calendar(AppointmentRepository $Appointment): Response
+    {
+        //$user = $this->getUser();
+        //$appointments = $Appointment->findBy(['barber'=>$user]);
+        $appointments = $Appointment->findAll();
+        foreach($appointments as $appointment) {
+
+            $startDate = $appointment->getDate()->format('Y-m-d');
+            $startTime = $appointment->getStartTime()->format('H:i:s');
+            $combinedStartDT = date('Y-m-d H:i:s', strtotime("$startDate $startTime"));
+            $endDate = $appointment->getDate()->format('Y-m-d');
+            $endTime = $appointment->getEndTime()->format('H:i:s');
+            $combinedEndDT = date('Y-m-d H:i:s', strtotime("$endDate $endTime"));
+
+            $type=$appointment->getService()->getCategory();
+
+            if($type=="combos") {
+                $color = '#B22222';
+            }elseif($type=="chewbacca hair cut \"autour des cheveux\"") {
+                $color='#556B2F';
+            }elseif($type=='the chewbacca beard "autour de la barbe"') {
+                $color='#4682B4';
+            }
+
+            $event[] = [
+                'id'=> $appointment->getId(),
+                'title'=>$appointment->getService()->getTitle(),
+                'start'=>$combinedStartDT,
+                'end'=>$combinedEndDT,
+                'extendedProps'=>$appointment->getCustomer()->getFirstName(),
+                'barberId'=>$appointment->getBarber()->getFirstName(),
+                'backgroundColor'=>$color,
+                'yo'=>$appointment->getService()->getCategory()
+            ];
+
+        }
+        $data = json_encode($event);
+        return $this->render('appointment/calendar.html.twig', compact('data'));
+    }
+
 }
