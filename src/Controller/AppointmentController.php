@@ -65,7 +65,7 @@ class AppointmentController extends AbstractController
             }elseif($type=="chewbacca hair cut \"autour des cheveux\"") {
                 $color='#556B2F';
             }elseif($type=='the chewbacca beard "autour de la barbe"') {
-                $color='#4682B4'd;
+                $color='#4682B4';
             }
 
             $event[] = [
