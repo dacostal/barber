@@ -1,19 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    <link href="{{ asset('css/service.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/new_appointment.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.css"
+          integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
 {% endblock %}
 
 {% block body %}
 
-    <label for="barbers">Sélectionner un barbier :</label>
+    <div id="new-app" class="w-75 mx-auto">
+        <label for="barbers">Préférence barbier</label>
 
-    <select name="barbers" id="barbers">
-        <option disabled selected value="">-- sélectionnez un barbier --</option>
-        {% for b in barbers %}
-            <option value="{{ b.id }}">{{ b.firstName }}</option>
-        {% endfor %}
-    </select>
+        <select class="custom-select w-25" name="barbers" id="barbers">
+            <option disabled selected value="">-- sélectionnez un barbier --</option>
+            {% for b in barbers %}
+                <option value="{{ b.id }}">{{ b.firstName }}</option>
+            {% endfor %}
+        </select>
 
+        <div id="availabilities" class="jumbotron">
 
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/newapp_calendar.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.js"
+            integrity="sha256-rPPF6R+AH/Gilj2aC00ZAuB2EKmnEjXlEWx5MkAp7bw=" crossorigin="anonymous"></script>
 {% endblock %}
