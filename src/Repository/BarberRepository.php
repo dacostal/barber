@@ -22,12 +22,12 @@ class BarberRepository extends ServiceEntityRepository
     // /**
     //  * @return Barber[] Returns an array of Barber objects
     //  */
-    public function findByService ($serviceId)
+    public function findByService($service)
     {
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery(
-            'SELECT b FROM App\Entity\Barber b  WHERE :id MEMBER OF b.services'
-        )->setParameter(':id',$serviceId);
+            'SELECT b FROM App\Entity\Barber b  WHERE :s MEMBER OF b.services'
+        )->setParameter(':s', $service);
 
         return $query->getResult();
     }
