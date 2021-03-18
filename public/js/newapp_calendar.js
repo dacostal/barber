@@ -5,8 +5,9 @@ window.onload = () => {
         initialView: 'dayGridWeek',
         locale: 'fr',
         timeZone: 'Europe/Paris',
-        firstDay: (new Date().getDay() + 1) % 7,
+        firstDay: (new Date().getDay()),
         themeSystem: 'bootstrap',
+        events : {{data | raw}}
         headerToolbar: {
             start: 'prev,next',
             center: 'title',

@@ -25,7 +25,29 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/newapp_calendar.js') }}"></script>
+    {#}<script src="{{ asset('js/newapp_calendar.js') }}"></script>{#}
+    <script>window.onload = () => {
+    let availabilities = document.querySelector("#availabilities");
+
+    let calendar = new FullCalendar.Calendar(availabilities, {
+        initialView: 'dayGridWeek',
+        locale: 'fr',
+        timeZone: 'Europe/Paris',
+        firstDay: (new Date().getDay()),
+        themeSystem: 'bootstrap',
+        events :  {{data | raw}},
+        headerToolbar: {
+            start: 'prev,next',
+            center: 'title',
+            end: 'today'
+        },
+        buttonText: {
+            today: 'Aujourd\'hui'
+        }
+    });
+
+    calendar.render();
+}</script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.js"
             integrity="sha256-rPPF6R+AH/Gilj2aC00ZAuB2EKmnEjXlEWx5MkAp7bw=" crossorigin="anonymous"></script>
 {% endblock %}

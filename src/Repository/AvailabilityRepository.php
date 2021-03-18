@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Service;
 use App\Entity\Availability;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Availability|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,7 +23,7 @@ class AvailabilityRepository extends ServiceEntityRepository
     // /**
     //  * @return Availability[] Returns an array of Availability objects
     //  */
-    public function findByBarber ($barber)
+    public function findByBarber($barber)
     {
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery(
@@ -30,6 +31,31 @@ class AvailabilityRepository extends ServiceEntityRepository
             FROM availability
             WHERE barber_id = :id'
         )->setParameter('id', $barber);
+
+        return $query->getResult();
+    }
+
+     // /**
+    //  * @return Availability[] Returns an array of Availability objects
+    //  */
+    public function findAllByWeek($service)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT a FROM App\Entity\Availability a 
+                WHERE a NOT IN 
+                (
+                    SELECT a FROM App\Entity\Appointment app 
+                    WHERE a MEMBER OF app.availabilities 
+                    AND app.date BETWEEN CURRENT_DATE() AND CURRENT_DATE()+6
+                )
+                AND a IN 
+                (
+                    SELECT DISTINCT a FROM App\Entity\Barber b 
+                    WHERE a MEMBER OF b.availabilities
+                    AND :s MEMBER OF b.services
+                )'
+        )->setParameter(':s', $service);
 
         return $query->getResult();
     }
