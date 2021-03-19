@@ -44,8 +44,8 @@ class AppointmentController extends AbstractController
         foreach ($availabilities as $availability)
         {
             
-            $s = new DateTime("19-03-2021".$availability->getStartTime()->format('H:i:s'));
-            $e = new DateTime("19-03-2021".$availability->getEndTime()->format('H:i:s'));
+            $s = new DateTime(date( "Y-m-d",strtotime("next monday")).$availability->getStartTime()->format('H:i:s'));
+            $e = new DateTime(date( "Y-m-d",strtotime("next monday")).$availability->getEndTime()->format('H:i:s'));
             $dispos[] = ['id' => $availability->getId(),
                        'title' =>$formatter->format($availability->getStartTime()->format('H:i:s')),
                        'startTime'=>$s,
@@ -55,7 +55,7 @@ class AppointmentController extends AbstractController
                         break;
         }
         
-        $data = json_encode($dispos);
+        dd($data = json_encode($dispos));
         return $this->render('appointment/reservation.html.twig', [
             'barbers' => $barberRepository->findByService($service),
             'data'=>$data
