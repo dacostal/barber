@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use DateTime;
 use App\Entity\Service;
-
 use App\Service\TimeFormatter;
 use App\Repository\BarberRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\AvailabilityRepository;
+use Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,30 +35,28 @@ class AppointmentController extends AbstractController
      * @param Service $service
      * @param BarberRepository $barberRepository
      * @param AvailabilityRepository $availabilityRepository
-     * @return Response
+     * @return JsonResponse
+     * @throws Exception
      */
-    public function choiceBarber(Service $service, BarberRepository $barberRepository, AvailabilityRepository $availabilityRepository, TimeFormatter $formatter): Response
+    public function choiceBarber(Service $service, BarberRepository $barberRepository, AvailabilityRepository $availabilityRepository): JsonResponse
     {
         $availabilities = $availabilityRepository->findAllByWeek($service);
         $dispos = [];
-        foreach ($availabilities as $availability)
+
+        foreach($availabilities as $availability)
         {
-            
-            $s = new DateTime(date( "Y-m-d",strtotime("next monday")).$availability->getStartTime()->format('H:i:s'));
-            $e = new DateTime(date( "Y-m-d",strtotime("next monday")).$availability->getEndTime()->format('H:i:s'));
-            $dispos[] = ['id' => $availability->getId(),
-                       'title' =>$formatter->format($availability->getStartTime()->format('H:i:s')),
-                       'startTime'=>$s,
-                       'endTime'=>$e,
-                        ];
-                        
-                        break;
+            $dispos[] = [
+                'id' => $availability->getId(),
+                'daysOfWeek' => [ $availability->getDay() ],
+                'startTime' => $availability->getStartTime()->format('H:i'),
+                'endTime' => $availability->getEndTime()->format('H:i')
+            ];
         }
-        
-        dd($data = json_encode($dispos));
-        return $this->render('appointment/reservation.html.twig', [
-            'barbers' => $barberRepository->findByService($service),
-            'data'=>$data
-        ]);
+
+        return new JsonResponse([
+                'barbers' => $barberRepository->findByService($service),
+                'data' => $dispos
+            ], 200
+        );
     }
 }

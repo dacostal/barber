@@ -22,32 +22,74 @@
 
         </div>
     </div>
+
 {% endblock %}
 
 {% block javascripts %}
     {#}<script src="{{ asset('js/newapp_calendar.js') }}"></script>{#}
-    <script>window.onload = () => {
-    let availabilities = document.querySelector("#availabilities");
+    <script>
+        window.onload = () => {
+            let availabilities = document.querySelector("#availabilities");
 
-    let calendar = new FullCalendar.Calendar(availabilities, {
-        initialView: 'dayGridWeek',
-        locale: 'fr',
-        timeZone: 'Europe/Paris',
-        firstDay: (new Date().getDay()),
-        themeSystem: 'bootstrap',
-        events :  {{data | raw}},
-        headerToolbar: {
-            start: 'prev,next',
-            center: 'title',
-            end: 'today'
-        },
-        buttonText: {
-            today: 'Aujourd\'hui'
+            let calendar = new FullCalendar.Calendar(availabilities, {
+                initialView: 'dayGridWeek',
+                locale: 'fr',
+                timeZone: 'Europe/Paris',
+                firstDay: (new Date().getDay()),
+                themeSystem: 'bootstrap',
+                headerToolbar: {
+                    start: 'prev,next',
+                    center: 'title',
+                    end: 'today'
+                },
+                buttonText: {
+                    today: 'Aujourd\'hui'
+                },
+                events: function(start, end, callback) {
+                    fetch('/reservation/' + getUrlId())
+                        .then((resp) => resp.json()) // Transform the JSON data into a variable
+                        .then(function(data) {
+                            var eventsList = [];
+                            for (var i = 0; i < data.events.length; i++) {
+                                var event = {
+                                    daysOfWeek: data.events[i].daysOfWeek,
+                                    startTime: data.events[i].startTime,
+                                    endTime: data.events[i].endTime,
+                                };
+                                eventsList.push(event);
+                            }
+                            callback(eventsList);
+                        });
+                },
+                eventTimeFormat: {
+                    hour: 'numeric',
+                    minute: '2-digit'
+                }
+            });
+
+            calendar.render();
         }
-    });
 
-    calendar.render();
-}</script>
+        function getUrlId(){
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+        }
+
+        function ajaxEventsById(){
+            $.ajax({
+                url : 'reservation/' + getUrlId(),
+                type : 'GET',
+                dataType : 'json',
+                success : function(events){ // success est toujours en place, bien sûr !
+                    return events;
+                },
+                error : function(resultat, statut, erreur){
+
+                }
+            });
+        }
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.js"
             integrity="sha256-rPPF6R+AH/Gilj2aC00ZAuB2EKmnEjXlEWx5MkAp7bw=" crossorigin="anonymous"></script>
 {% endblock %}
