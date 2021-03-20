@@ -1,11 +1,9 @@
 {# templates/booking/calendar.html.twig #}
 {% extends 'base.html.twig' %}
 
-
-
 {% block body %}
 
-    {{ dump(data) }}
+    {# {{ dump(data) }} #}
     <div id="calendar-holder"></div>
 {% endblock %}
 
@@ -39,7 +37,7 @@
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
 
-                defaultView: 'dayGridMonth',
+                defaultView: 'timeGridWeek',
                 locale: 'fr',
                 timezone : 'Europe/Paris',
                 editable: true,
@@ -47,10 +45,14 @@
                 header: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                    right: 'timeGridDay,timeGridWeek,dayGridMonth',
                 },
-
-
+                buttonText: {
+                    today: 'Aujourd\'hui',
+                    month: 'Mois',
+                    week: 'Semaine',
+                    day: 'Jour'
+                },
 
                 plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
 
@@ -60,8 +62,8 @@
                     info.el.style.borderColor = 'red';
                 }
 
-
             });
+
             calendar.render();
         });
     </script>

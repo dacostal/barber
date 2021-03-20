@@ -3,13 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Service;
-
 use App\Repository\AppointmentRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\BarberRepository;
-
-
-use App\Repository\ServiceRepository;
 use App\Service\TimeFormatter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,12 +43,16 @@ class AppointmentController extends AbstractController
 
     /**
      * @Route("/calendar", name="appointment_calendar", methods={"GET"})
+     * @param AppointmentRepository $Appointment
+     * @return Response
      */
     public function calendar(AppointmentRepository $Appointment): Response
     {
         //$user = $this->getUser();
         //$appointments = $Appointment->findBy(['barber'=>$user]);
         $appointments = $Appointment->findAll();
+        $event = [];
+
         foreach($appointments as $appointment) {
 
             $startDate = $appointment->getDate()->format('Y-m-d');
@@ -87,5 +87,4 @@ class AppointmentController extends AbstractController
         $data = json_encode($event);
         return $this->render('appointment/calendar.html.twig', compact('data'));
     }
-
 }

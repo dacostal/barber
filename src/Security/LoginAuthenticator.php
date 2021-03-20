@@ -107,7 +107,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
         // redirect to reservation route if customer or calendar route if barber
         return $this->security->getUser() instanceof Customer
             ? new RedirectResponse($this->urlGenerator->generate('reservation'))
-            : new RedirectResponse($this->urlGenerator->generate('calendar'));
+            : new RedirectResponse($this->urlGenerator->generate('appointment_calendar'));
     }
 
     protected function getLoginUrl(): string

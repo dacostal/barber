@@ -78,7 +78,7 @@ class AppointmentRepository extends ServiceEntityRepository
         $sql = '
             SELECT DAYNAME(date) day, COUNT(*) count FROM Appointment a
             WHERE week(a.date) = week(CURRENT_DATE) 
-            GROUP BY day
+            GROUP BY day, DAYOFWEEK(a.date)
             ORDER BY DAYOFWEEK(a.date)
 
             ';
@@ -95,7 +95,7 @@ class AppointmentRepository extends ServiceEntityRepository
         $sql = 'SELECT b.first_name name, IFNULL(a.date=CURRENT_DATE,0) count FROM user b
                 LEFT OUTER JOIN appointment a ON b.id=a.barber_id
                 WHERE b.type= "barber"
-                GROUP BY b.first_name
+                GROUP BY name, count
                 ';
         $stmt = $conn->prepare($sql);
         $stmt->execute();
