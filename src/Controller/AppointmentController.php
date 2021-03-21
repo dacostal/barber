@@ -48,10 +48,10 @@ class AppointmentController extends AbstractController
      */
     public function calendar(AppointmentRepository $Appointment): Response
     {
-        //$user = $this->getUser();
-        //$appointments = $Appointment->findBy(['barber'=>$user]);
-        $appointments = $Appointment->findAll();
-        $event = [];
+        $user = $this->getUser();
+        $appointments = $Appointment->findBy(['barber'=>$user]);
+        $event =[];
+        //$appointments = $Appointment->findAll();
 
         foreach($appointments as $appointment) {
 
