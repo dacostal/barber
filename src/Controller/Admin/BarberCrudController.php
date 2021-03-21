@@ -25,20 +25,20 @@ class BarberCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            FormField::addPanel('Personal Information'),
-            Field::new('FirstName','Name'),
-            Field::new('Password'),
+            FormField::addPanel('Information personnelle'),
+            Field::new('FirstName','Prénom'),
+            Field::new('Password', 'Mot de passe'),
 
-            FormField::addPanel('Contact information')
+            FormField::addPanel('Contactes')
                 ->setIcon('Phone')->addCssClass('optional'),
-            TelephoneField::new('Phone','Phone number'),
-            EmailField::new('Email'),
+            TelephoneField::new('Phone','Téléphone'),
+            EmailField::new('Email', 'Adresse mail'),
 
             FormField::addPanel('Services'),
 
             AssociationField::new('services'),
-            DateTimeField::new('createdAt'),
-            DateTimeField::new('deletedAt')->hideOnForm(),
+            DateTimeField::new('createdAt', 'Date de création'),
+            DateTimeField::new('deletedAt','Date de suppression')->hideOnForm(),
             Field::new('isAdmin','Administrator'),
         ];
     }

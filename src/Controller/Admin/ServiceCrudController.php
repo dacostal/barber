@@ -24,16 +24,16 @@ class ServiceCrudController extends AbstractCrudController
     {
         return [
             FormField::addPanel('Service'),
-            Field::new('Title'),
-            TextareaField::new('Description'),
+            Field::new('Title','Titre'),
+            TextareaField::new('Description',),
             FormField::addPanel('Details'),
-            TimeField::new('Time')->setFormat('HH:mm'),
-            MoneyField::new('Price')->setCurrency('EUR'),
-            FormField::addPanel('Barbers'),
-            AssociationField::new('barbers'),
-            DateTimeField::new('createdAt'),
-            DateTimeField::new('deletedAt')->hideOnForm(),
-            Field::new('category'),
+            TimeField::new('Time','Durée')->setFormat('HH:mm'),
+            MoneyField::new('Price','Prix')->setCurrency('EUR'),
+            FormField::addPanel('Barbiers',),
+            AssociationField::new('barbers','barbiers'),
+            DateTimeField::new('createdAt','Date de création'),
+            DateTimeField::new('deletedAt', 'Date de supression')->hideOnForm(),
+            Field::new('category','Catégorie'),
         ];
     }
 

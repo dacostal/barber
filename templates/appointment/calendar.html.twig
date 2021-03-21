@@ -23,16 +23,18 @@
     </style>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+
 {% endblock %}
 
 {% block javascripts %}
+
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
-
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
             var calendarEl = document.getElementById('calendar-holder');
@@ -44,12 +46,14 @@
                 timezone : 'Europe/Paris',
                 editable: true,
                 events : {{ data|raw  }},
+                themeSystem:'bootstrap',
                 header: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay',
                 },
-
+                minTime : '09:00:00',
+                maxTime: '19:00:00',
 
 
                 plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
@@ -63,6 +67,7 @@
 
             });
             calendar.render();
+
         });
     </script>
 {% endblock %}
