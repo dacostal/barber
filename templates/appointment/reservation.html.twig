@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/service.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+    <label for="barbers">Sélectionner un barbier :</label>
+
+    <select name="barbers" id="barbers">
+        <option disabled selected value="">-- sélectionnez un barbier --</option>
+        {% for b in barbers %}
+            <option value="{{ b.id }}">{{ b.firstName }}</option>
+        {% endfor %}
+    </select>
+
+
+{% endblock %}

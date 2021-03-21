@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AppointmentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -56,7 +58,7 @@ class Appointment
     private $customer;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Barber::class, inversedBy="appointment")
+     * @ORM\ManyToOne(targetEntity=Barber::class, inversedBy="appointments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $barber;
@@ -66,6 +68,16 @@ class Appointment
      * @ORM\JoinColumn(nullable=false)
      */
     private $service;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Availability::class, inversedBy="appointments")
+     */
+    private $availabilities;
+
+    public function __construct()
+    {
+        $this->availabilities = new ArrayCollection();
+    }
 
     /**
      * @ORM\Column(type="datetime")
@@ -182,6 +194,30 @@ class Appointment
     public function setService(?Service $service): self
     {
         $this->service = $service;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Availability[]
+     */
+    public function getAvailabilities(): Collection
+    {
+        return $this->availabilities;
+    }
+
+    public function addAvailability(Availability $availability): self
+    {
+        if (!$this->availabilities->contains($availability)) {
+            $this->availabilities[] = $availability;
+        }
+
+        return $this;
+    }
+
+    public function removeAvailability(Availability $availability): self
+    {
+        $this->availabilities->removeElement($availability);
 
         return $this;
     }
