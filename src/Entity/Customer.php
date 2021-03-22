@@ -6,6 +6,7 @@ use App\Repository\CustomerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
@@ -29,6 +30,15 @@ class Customer extends User
 
     /**
      * @ORM\Column(type="string", length=5, nullable=true)
+     * @Assert\Type(
+     *     type="digit",
+     *     message="Votre code postal ne doit contenir que des chiffres."
+     * )
+     * @Assert\Length(
+     *      min=5,
+     *      max=5,
+     *      exactMessage="Votre code postal doit contenir exactement {{ limit }} chiffres."
+     * )
      */
     private $zipcode;
 

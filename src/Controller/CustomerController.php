@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/customer")
@@ -24,7 +25,7 @@ class CustomerController extends AbstractController
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return Response
      */
-    public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder, ValidatorInterface $validator): Response
     {
         $customer = new Customer();
         $form = $this->createForm(CustomerType::class, $customer);
@@ -49,9 +50,13 @@ class CustomerController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        // all errors from form validation
+        $errors = $validator->validate($customer);
+
         return $this->render('customer/create.html.twig', [
             'customer' => $customer,
             'form' => $form->createView(),
+            'errors' => $errors,
         ]);
     }
 

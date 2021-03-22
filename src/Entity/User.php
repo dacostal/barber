@@ -5,12 +5,15 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- *
- *
- *
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="Cet e-mail est déjà utilisé."
+ * )
  * @ORM\Table(name="`user`")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
@@ -26,14 +29,13 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer",unique=true)
-     *
      * @ORM\JoinColumn(name="barber_id", referencedColumnName="id", onDelete="CASCADE")
-     *
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
+     * @Assert\Email
      */
     private $email;
 
@@ -45,6 +47,10 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(
+     *      min=8,
+     *      minMessage="Votre mot de passe doit contenir au minimum {{ limit }} caractères."
+     * )
      */
     private $password;
 
@@ -55,6 +61,15 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Assert\Type(
+     *     type="digit",
+     *     message="Votre numéro de téléphone ne doit contenir que des chiffres."
+     * )
+     * @Assert\Length(
+     *      min=10,
+     *      max=10,
+     *      exactMessage="Votre numéro de téléphone doit contenir exactement {{ limit }} chiffres."
+     * )
      */
     private $phone;
 

@@ -17,7 +17,13 @@
 {% block body %}
 
     {{ form_start(form, {'attr': {'class': 'w-50 mx-auto bg-white p-5'}}) }}
-        <h1 class="h3 font-weight-normal">Inscription</h1>
+        <h1 class="h3 font-weight-normal mb-4">Inscription</h1>
+
+        <ul>
+            {% for error in errors %}
+                <li class="text-danger">{{ error.message }}</li>
+            {% endfor %}
+        </ul>
 
         <div class="form-row">
             <div class="col">
