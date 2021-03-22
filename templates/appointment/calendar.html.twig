@@ -21,9 +21,10 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 defaultView: 'timeGridWeek',
                 locale: 'fr',
-                timezone : 'Europe/Paris',
+                timezone: 'Europe/Paris',
                 editable: true,
-                events : {{ data|raw  }},
+                events: {{ data|raw  }},
+                themeSystem:'bootstrap',
                 header: {
                     left: 'prev,next today',
                     center: 'title',
@@ -41,7 +42,8 @@
                 plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
 
                 eventClick: function(info) {
-                    alert('Réservation: ' + info.event.title + '\n' + 'De ' + info.event.start + 'à ' + info.event.end);
+                    alert('Réservation : ' + info.event.title + '\n' + 'De '
+                        + info.event.start + 'à ' + info.event.end);
                 }
             });
 

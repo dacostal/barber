@@ -43,13 +43,13 @@ class AppointmentController extends AbstractController
 
     /**
      * @Route("/calendar", name="appointment_calendar", methods={"GET"})
-     * @param AppointmentRepository $Appointment
+     * @param AppointmentRepository $appointmentRepository
      * @return Response
      */
-    public function calendar(AppointmentRepository $Appointment): Response
+    public function calendar(AppointmentRepository $appointmentRepository): Response
     {
         $user = $this->getUser();
-        $appointments = $Appointment->findBy(['barber'=>$user]);
+        $appointments = $appointmentRepository->findBy(['barber'=>$user]);
 
         $event = [];
 
@@ -73,7 +73,7 @@ class AppointmentController extends AbstractController
             }*/
 
             $event[] = [
-                'id'=> $appointment->getId(),
+                'id'=>$appointment->getId(),
                 'title'=>$appointment->getService()->getTitle(),
                 'start'=>$combinedStartDT,
                 'end'=>$combinedEndDT,

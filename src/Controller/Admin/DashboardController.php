@@ -92,10 +92,10 @@ class DashboardController extends AbstractDashboardController
         return [
             MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
 
-            MenuItem::subMenu('Barber', 'fas fa-user')->setSubItems([
+            MenuItem::subMenu('Barbier', 'fas fa-user')->setSubItems([
 
-                MenuItem::linkToCrud('All barbers', 'fas fa-archive', Barber::class),
-                MenuItem::linkToCrud('Add a barber', 'far fa-plus-square', Barber::class)
+                MenuItem::linkToCrud('Les barbers', 'fas fa-archive', Barber::class),
+                MenuItem::linkToCrud('Ajouter un barbier', 'far fa-plus-square', Barber::class)
                     ->setAction('new'),
 
             ]),
@@ -103,8 +103,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::subMenu('Service', 'fas fa-cut')->setSubItems([
 
 
-                MenuItem::linkToCrud('All services', 'fas fa-archive', Service::class),
-                MenuItem::linkToCrud('Add a service', 'far fa-plus-square', Service::class)
+                MenuItem::linkToCrud('Les services', 'fas fa-archive', Service::class),
+                MenuItem::linkToCrud('Ajouter un service', 'far fa-plus-square', Service::class)
                     ->setAction('new'),
             ]),
 
