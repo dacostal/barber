@@ -20,28 +20,29 @@ class Barber extends User
     private $isAdmin;
 
     /**
+<<<<<<< HEAD
      * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="barber",cascade={"remove"})
      *
+=======
+     * @ORM\OneToMany(targetEntity=appointment::class, mappedBy="barber")
+>>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
      */
     private $appointments;
 
     /**
+<<<<<<< HEAD
      * @ORM\ManyToMany(targetEntity=Service::class, inversedBy="barbers",cascade={"remove"})
      *
+=======
+     * @ORM\ManyToMany(targetEntity=service::class, inversedBy="barbers")
+>>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
      */
     private $services;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Availability::class, inversedBy="barbers")
-     */
-    private $availabilities;
-
     public function __construct()
     {
-        $this->setCreatedAt( new \DateTime('now'));
         $this->appointments = new ArrayCollection();
         $this->services = new ArrayCollection();
-        $this->availabilities = new ArrayCollection();
     }
 
 
@@ -58,14 +59,14 @@ class Barber extends User
     }
 
     /**
-     * @return Collection|Appointment[]
+     * @return Collection|appointment[]
      */
     public function getAppointments(): Collection
     {
         return $this->appointments;
     }
 
-    public function addAppointment(Appointment $appointment): self
+    public function addAppointment(appointment $appointment): self
     {
         if (!$this->appointments->contains($appointment)) {
             $this->appointments[] = $appointment;
@@ -75,7 +76,7 @@ class Barber extends User
         return $this;
     }
 
-    public function removeAppointment(Appointment $appointment): self
+    public function removeAppointment(appointment $appointment): self
     {
         if ($this->appointment->removeElement($appointment)) {
             // set the owning side to null (unless already changed)
@@ -88,14 +89,14 @@ class Barber extends User
     }
 
     /**
-     * @return Collection|Service[]
+     * @return Collection|service[]
      */
     public function getServices(): Collection
     {
         return $this->services;
     }
 
-    public function addService(Service $service): self
+    public function addService(service $service): self
     {
         if (!$this->services->contains($service)) {
             $this->services[] = $service;
@@ -104,12 +105,13 @@ class Barber extends User
         return $this;
     }
 
-    public function removeService(Service $service): self
+    public function removeService(service $service): self
     {
         $this->services->removeElement($service);
 
         return $this;
     }
+<<<<<<< HEAD
 
     /**
      * @return Collection|Availability[]
@@ -134,4 +136,6 @@ class Barber extends User
 
         return $this;
     }
+=======
+>>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
 }
