@@ -19,7 +19,6 @@ class AppointmentRepository extends ServiceEntityRepository
         parent::__construct($registry, Appointment::class);
     }
 
-<<<<<<< HEAD
     public function findTodayAppointments()
     {
         $conn = $this->getEntityManager()->getConnection();
@@ -103,7 +102,8 @@ class AppointmentRepository extends ServiceEntityRepository
 
     }
 
- /*  public function getAppointmentsLastDays(): array
+    /*
+    public function getAppointmentsLastDays(): array
     {
 
         $conn  = $this->getEntityManager()->getConnection();
@@ -116,9 +116,8 @@ class AppointmentRepository extends ServiceEntityRepository
         }
 
     }
-*/
-=======
->>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
+    */
+
     // /**
     //  * @return Appointment[] Returns an array of Appointment objects
     //  */
