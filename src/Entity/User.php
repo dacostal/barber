@@ -209,12 +209,9 @@ class User implements UserInterface
 
         return $this;
     }
-<<<<<<< HEAD
 
     public function __toString(): string
     {
         return $this->getFirstName();
     }
-=======
->>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
 }

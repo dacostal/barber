@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\ServiceRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ServiceRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=ServiceRepository::class)
@@ -50,7 +50,7 @@ class Service
     private $deletedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=appointment::class, mappedBy="service")
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="service")
      */
     private $appointments;
 
@@ -59,8 +59,14 @@ class Service
      */
     private $barbers;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $category;
+
     public function __construct()
     {
+        $this->setCreatedAt( new \DateTime('now'));
         $this->appointments = new ArrayCollection();
         $this->barbers = new ArrayCollection();
     }
@@ -143,14 +149,14 @@ class Service
     }
 
     /**
-     * @return Collection|appointment[]
+     * @return Collection|Appointment[]
      */
     public function getAppointments(): Collection
     {
         return $this->appointments;
     }
 
-    public function addAppointment(appointment $appointment): self
+    public function addAppointment(Appointment $appointment): self
     {
         if (!$this->appointments->contains($appointment)) {
             $this->appointments[] = $appointment;
@@ -160,7 +166,9 @@ class Service
         return $this;
     }
 
-    public function removeAppointment(appointment $appointment): self
+
+
+    public function removeAppointment(Appointment $appointment): self
     {
         if ($this->appointments->removeElement($appointment)) {
             // set the owning side to null (unless already changed)
@@ -198,7 +206,6 @@ class Service
 
         return $this;
     }
-<<<<<<< HEAD
 
     public function getCategory(): ?string
     {
@@ -216,6 +223,4 @@ class Service
     {
         return $this->getTitle();
     }
-=======
->>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
 }

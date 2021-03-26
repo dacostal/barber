@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AvailabilityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Availability
 {
-<<<<<<< HEAD
     const LUNDI = 1;
     const MARDI = 2;
     const MERCREDI = 3;
@@ -21,12 +22,6 @@ class Availability
     const MATIN = 'Matin';
     const APRES_MIDI = 'Après-midi';
 
-=======
-    //enum bdd day
-    const DAY = array("Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi");
-    //enum bdd Time of day
-    const TIME_OF_DAY = array("Matin","Après-midi");
->>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -45,10 +40,13 @@ class Availability
     private $endTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Barber::class, inversedBy="availabilities")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity=Barber::class, mappedBy="availabilities")
      */
-<<<<<<< HEAD
+    private $barbers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Appointment::class, mappedBy="availabilities")
+     */
     private $appointments;
 
     /**
@@ -66,9 +64,6 @@ class Availability
         $this->barbers = new ArrayCollection();
         $this->appointments = new ArrayCollection();
     }
-=======
-    private $barber;
->>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
 
     public function getId(): ?int
     {
@@ -99,18 +94,32 @@ class Availability
         return $this;
     }
 
-    public function getBarber(): ?Barber
+    /**
+     * @return Collection|Barber[]
+     */
+    public function getBarbers(): Collection
     {
-        return $this->barber;
+        return $this->barbers;
     }
 
-    public function setBarber(?Barber $barber): self
+    public function addBarber(Barber $barber): self
     {
-        $this->barber = $barber;
+        if (!$this->barbers->contains($barber)) {
+            $this->barbers[] = $barber;
+            $barber->addAvailability($this);
+        }
 
         return $this;
     }
-<<<<<<< HEAD
+
+    public function removeBarber(Barber $barber): self
+    {
+        if ($this->barbers->removeElement($barber)) {
+            $barber->removeAvailability($this);
+        }
+
+        return $this;
+    }
 
     /**
      * @return Collection|Appointment[]
@@ -168,8 +177,4 @@ class Availability
 
         return $this;
     }
-
-
-=======
->>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
 }
