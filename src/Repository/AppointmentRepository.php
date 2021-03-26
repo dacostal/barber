@@ -92,9 +92,9 @@ class AppointmentRepository extends ServiceEntityRepository
     public function getTodayAppointmentsBarber() : array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = 'SELECT b.first_name name, IFNULL(a.date=CURRENT_DATE,0) count FROM user b
+        $sql = 'SELECT b.first_name name, IFNULL(COUNT(b.first_name),0) count FROM user b
                 LEFT OUTER JOIN appointment a ON b.id=a.barber_id
-                WHERE b.type= "barber"
+                WHERE b.type= "barber" AND a.date=CURRENT_DATE
                 GROUP BY b.first_name
                 ';
         $stmt = $conn->prepare($sql);

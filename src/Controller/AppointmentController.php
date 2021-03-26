@@ -9,7 +9,6 @@ use App\Repository\ServiceRepository;
 use App\Repository\BarberRepository;
 
 
-use App\Repository\ServiceRepository;
 use App\Service\TimeFormatter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
