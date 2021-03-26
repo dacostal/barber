@@ -43,13 +43,15 @@ class Customer extends User
     private $zipcode;
 
     /**
-     * @ORM\OneToMany(targetEntity=appointment::class, mappedBy="customer")
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="customer")
      */
     private $appointments;
 
     public function __construct()
     {
+        $this->setCreatedAt( new \DateTime('now'));
         $this->appointments = new ArrayCollection();
+       
     }
 
 
@@ -102,14 +104,14 @@ class Customer extends User
     }
 
     /**
-     * @return Collection|appointment[]
+     * @return Collection|Appointment[]
      */
     public function getAppointments(): Collection
     {
         return $this->appointments;
     }
 
-    public function addAppointment(appointment $appointment): self
+    public function addAppointment(Appointment $appointment): self
     {
         if (!$this->appointments->contains($appointment)) {
             $this->appointments[] = $appointment;
@@ -119,7 +121,7 @@ class Customer extends User
         return $this;
     }
 
-    public function removeAppointment(appointment $appointment): self
+    public function removeAppointment(Appointment $appointment): self
     {
         if ($this->appointments->removeElement($appointment)) {
             // set the owning side to null (unless already changed)

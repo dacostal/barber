@@ -7,17 +7,17 @@
         <!-- onglets alignés à gauche -->
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ path('home') }}">
                     <em class="fas fa-home"></em> Accueil
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href='{{ path('service') }}'>
                     <em class="fas fa-cut"></em> Prestations
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ path('contact') }}">
                     <em class="fas fa-phone-alt"></em> Contact
                 </a>
             </li>
@@ -25,7 +25,6 @@
 
         <!-- onglets alignés à droite -->
         <ul class="navbar-nav ml-auto">
-<<<<<<< HEAD
 
             {% if not app.user %}
                 <li class="nav-item">
@@ -52,18 +51,6 @@
                 </li>
             {% endif %}
 
-=======
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <em class="fas fa-sign-in-alt"></em> Connexion
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <em class="fas fa-calendar-alt"></em> Prendre rendez-vous
-                </a>
-            </li>
->>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="true" aria-expanded="false">
@@ -73,7 +60,6 @@
                     <a class="dropdown-item" href="#">
                         <em class="fas fa-tags"></em> Nos produits
                     </a>
-<<<<<<< HEAD
 
                     {% if app.user %}
                         <a class="dropdown-item" href="{{ app.user.lastName is defined
@@ -90,8 +76,6 @@
                             <em class="fas fa-sign-out-alt"></em> Déconnexion
                         </a>
                     {% endif %}
-=======
->>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
                 </div>
             </li>
 

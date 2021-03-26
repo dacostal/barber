@@ -1,0 +1,24 @@
+.titre {
+    padding: 20px;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+
+#prestation {
+    margin: 0 80px;
+    padding: 25px 80px;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.category_titre {
+    font-weight: bold;
+    font-size: 25px;
+    text-align: center;
+}
+
+.table {
+    margin: 25px 0 80px;
+    background-color: white;
+}

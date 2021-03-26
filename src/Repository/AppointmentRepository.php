@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Appointment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Driver\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -102,8 +103,7 @@ class AppointmentRepository extends ServiceEntityRepository
 
     }
 
-    /*
-    public function getAppointmentsLastDays(): array
+ /*  public function getAppointmentsLastDays(): array
     {
 
         $conn  = $this->getEntityManager()->getConnection();
@@ -116,8 +116,7 @@ class AppointmentRepository extends ServiceEntityRepository
         }
 
     }
-    */
-
+*/
     // /**
     //  * @return Appointment[] Returns an array of Appointment objects
     //  */

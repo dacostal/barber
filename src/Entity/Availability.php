@@ -177,4 +177,6 @@ class Availability
 
         return $this;
     }
+
+
 }

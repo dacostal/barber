@@ -63,7 +63,6 @@ class AvailabilityRepository extends ServiceEntityRepository
     // /**
     //  * @return Availability[] Returns an array of Availability objects
     //  */
-
     /*
     public function findByExampleField($value)
     {
