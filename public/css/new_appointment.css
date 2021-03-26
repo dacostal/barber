@@ -1,0 +1,11 @@
+label{
+    color: white;
+}
+
+label, select{
+    display: block;
+}
+
+#availabilities{
+    margin-top: 60px;
+}

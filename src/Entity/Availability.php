@@ -12,12 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Availability
 {
-    const LUNDI = 'Lundi';
-    const MARDI = 'Mardi';
-    const MERCREDI = 'Mercredi';
-    const JEUDI = 'Jeudi';
-    const VENDREDI = 'Vendredi';
-    const SAMEDI = 'Samedi';
+    const LUNDI = 1;
+    const MARDI = 2;
+    const MERCREDI = 3;
+    const JEUDI = 4;
+    const VENDREDI = 5;
+    const SAMEDI = 6;
 
     const MATIN = 'Matin';
     const APRES_MIDI = 'Après-midi';
@@ -50,7 +50,7 @@ class Availability
     private $appointments;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $day;
 
