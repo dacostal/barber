@@ -45,7 +45,7 @@
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('calendar') }}">
+                    <a class="nav-link" href="{{ path('appointment_calendar') }}">
                         <em class="fas fa-calendar-alt"></em> Mon agenda
                     </a>
                 </li>
@@ -67,6 +67,11 @@
                             : path('barber_read', {'id': app.user.id}) }}">
                             <em class="far fa-user"></em> Mon compte
                         </a>
+                        {% if app.user.lastName is not defined and app.user.isAdmin %}
+                            <a class="dropdown-item" href="{{ path('admin') }}">
+                                <em class="fas fa-users-cog"></em> Administration
+                            </a>
+                        {% endif %}
                         <a class="dropdown-item" href="{{ path('app_logout') }}">
                             <em class="fas fa-sign-out-alt"></em> Déconnexion
                         </a>
