@@ -7,12 +7,14 @@ use App\Service\TimeFormatter;
 use App\Repository\BarberRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\AvailabilityRepository;
-use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @Route("/appointment")
+ */
 class AppointmentController extends AbstractController
 {
     /**
@@ -33,12 +35,11 @@ class AppointmentController extends AbstractController
     /**
      * @Route("/reservation/{id}", name="reservation_id")
      * @param Service $service
-     * @param BarberRepository $barberRepository
      * @param AvailabilityRepository $availabilityRepository
-     * @return JsonResponse
-     * @throws Exception
+     * @param BarberRepository $barberRepository
+     * @return Response
      */
-    public function choiceBarber(Service $service, BarberRepository $barberRepository, AvailabilityRepository $availabilityRepository): JsonResponse
+    public function choiceBarber(Service $service, AvailabilityRepository $availabilityRepository, BarberRepository $barberRepository): Response
     {
         $availabilities = $availabilityRepository->findAllByWeek($service);
         $dispos = [];
@@ -53,10 +54,9 @@ class AppointmentController extends AbstractController
             ];
         }
 
-        return new JsonResponse([
-                'barbers' => $barberRepository->findByService($service),
-                'data' => $dispos
-            ], 200
-        );
+        return $this->render('appointment/reservation.html.twig', [
+            'barbers' => $barberRepository->findByService($service),
+            'data' => json_encode($dispos)
+        ]);
     }
 }
