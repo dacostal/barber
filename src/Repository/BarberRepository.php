@@ -22,7 +22,6 @@ class BarberRepository extends ServiceEntityRepository
     // /**
     //  * @return Barber[] Returns an array of Barber objects
     //  */
-<<<<<<< HEAD
     public function findByService($service)
     {
         $entityManager = $this->getEntityManager();
@@ -32,13 +31,11 @@ class BarberRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
-   // $query = $em->createQuery("SELECT u FROM User u JOIN u.address a WHERE a.city = 'Berlin'")
 
     // /**
     //  * @return Barber[] Returns an array of Barber objects
     //  */
-=======
->>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
+
     /*
     public function findByExampleField($value)
     {

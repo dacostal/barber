@@ -23,7 +23,6 @@ class AvailabilityRepository extends ServiceEntityRepository
     // /**
     //  * @return Availability[] Returns an array of Availability objects
     //  */
-<<<<<<< HEAD
     public function findByBarber($barber)
     {
         $entityManager = $this->getEntityManager();
@@ -64,8 +63,7 @@ class AvailabilityRepository extends ServiceEntityRepository
     // /**
     //  * @return Availability[] Returns an array of Availability objects
     //  */
-=======
->>>>>>> be84bfe9b2260b8591678331d95f2d169309db28
+
     /*
     public function findByExampleField($value)
     {
