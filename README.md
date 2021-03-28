@@ -34,7 +34,7 @@ git clone https://github.com/dacostal/barber.git
 composer install
 ```
 
-Copiez le fichier .env, renommez-le .env.local et modifiez la variable d'environnement DATABASE_URL selon les spécificités de votre serveur.
+Copiez-collez le fichier .env à la racine du projet, renommez-le .env.local et modifiez la variable d'environnement DATABASE_URL selon les spécificités de votre serveur.
 
 Créez une base de données nommée *barber*.
 
@@ -52,17 +52,26 @@ php bin/console d:f:l
 
 ## Authentification
 
-* Pour se connecter en tant que client : 
-  E-mail : oceane.roberts@schaden.com
-  Mot de passe : azerty
-  
-* Pour se connecter en tant que barber : 
-  E-mail : keebler.camron@yahoo.com
-  Mot de passe : azerty
-  
-* Pour se connecter en tant qu'administrateur : 
-  E-mail : hlemke@pouros.com
-  Mot de passe : azerty
+### Authentification sur le site en local
+
+Récupérez les informations concernant les différents types d'utilisateurs à partir de la base de données selon les fonctionnalités à tester.
+
+### Authentification sur le site en ligne
+
+Pour se connecter en tant que client : 
+
+* E-mail : rogahn.ophelia@hotmail.com
+* Mot de passe : azerty
+
+Pour se connecter en tant que barbier : 
+
+* E-mail : jhintz@yahoo.com
+* Mot de passe : azerty
+
+Pour se connecter en tant qu'administrateur : 
+
+* E-mail : woodrow95@hotmail.com
+* Mot de passe : azerty
 
 ## Auteurs
 
