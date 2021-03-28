@@ -20,6 +20,50 @@ Ce site web est réalisé avec les langages HTML, CSS, JavaScript, PHP, les fram
 
 ![image](design/classDiagram.png)
 
+## Guide d'installation
+
+Dans le terminal, saisissez les commandes suivantes : 
+
+* Pour cloner le projet : 
+```
+git clone https://github.com/dacostal/barber.git
+```
+
+* Pour installer Composer : 
+```
+composer install
+```
+
+Copiez le fichier .env, renommez-le .env.local et modifiez la variable d'environnement DATABASE_URL selon les spécificités de votre serveur.
+
+Créez une base de données nommée *barber*.
+
+Dans le terminal, saisissez les commandes suivantes : 
+
+* Pour créer les différentes tables et leurs relations : 
+```
+php bin/console d:m:m
+```
+
+* Pour charger les données : 
+```
+php bin/console d:f:l
+```
+
+## Authentification
+
+* Pour se connecter en tant que client : 
+  E-mail : oceane.roberts@schaden.com
+  Mot de passe : azerty
+  
+* Pour se connecter en tant que barber : 
+  E-mail : keebler.camron@yahoo.com
+  Mot de passe : azerty
+  
+* Pour se connecter en tant qu'administrateur : 
+  E-mail : hlemke@pouros.com
+  Mot de passe : azerty
+
 ## Auteurs
 
 * Eviatar Houri alias eviatar75
