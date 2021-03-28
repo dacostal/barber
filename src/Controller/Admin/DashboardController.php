@@ -108,11 +108,8 @@ class DashboardController extends AbstractDashboardController
                     ->setAction('new'),
             ]),
 
-
+            MenuItem::linkToRoute('Exit', 'fas fa-arrow-left', 'appointment_calendar')
         ];
 
     }
-
-
-
 }

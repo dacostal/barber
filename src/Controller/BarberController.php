@@ -4,16 +4,21 @@ namespace App\Controller;
 
 use App\Entity\Barber;
 use App\Form\BarberType;
-use App\Repository\BarberRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/barber')]
+/**
+ * @Route("/barber")
+ */
 class BarberController extends AbstractController
 {
-    #[Route('/{id}/read', name: 'barber_read', methods: ['GET'])]
+    /**
+     * @Route("/{id}/read", name="barber_read", methods={"GET"})
+     * @param Barber $barber
+     * @return Response
+     */
     public function read(Barber $barber): Response
     {
         return $this->render('barber/read.html.twig', [
@@ -21,7 +26,12 @@ class BarberController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/update', name: 'barber_update', methods: ['GET', 'POST'])]
+    /**
+     * @Route("/{id}/update", name="barber_update", methods={"GET","POST"})
+     * @param Request $request
+     * @param Barber $barber
+     * @return Response
+     */
     public function update(Request $request, Barber $barber): Response
     {
         $form = $this->createForm(BarberType::class, $barber);
@@ -39,7 +49,12 @@ class BarberController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'barber_delete', methods: ['DELETE'])]
+    /**
+     * @Route("/{id}/delete", name="barber_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Barber $barber
+     * @return Response
+     */
     public function delete(Request $request, Barber $barber): Response
     {
         if ($this->isCsrfTokenValid('delete'.$barber->getId(), $request->request->get('_token'))) {
