@@ -2,6 +2,8 @@
 
 Site web pour le barber shop Chewbacca permettant aux clients de se renseigner sur les prestations, les coordonnées et de prendre rendez-vous.
 
+Lien vers le site en ligne : https://barber-chewbacca.herokuapp.com.
+
 ## Fonctionnalités
 
 Un client ne peut prendre rendez-vous que s'il possède un compte et est connecté. Il peut parcourir ses différents rendez-vous. Il peut accéder aux informations d'un rendez-vous ou l'annuler.
