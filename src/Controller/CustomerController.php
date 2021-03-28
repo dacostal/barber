@@ -6,6 +6,8 @@ use App\Entity\Customer;
 use App\Form\CustomerType;
 use App\Form\CustomerUpdatePwdType;
 use App\Form\CustomerUpdateType;
+use App\Service\SendingMail;
+use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +15,10 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * @Route("/customer")
@@ -23,9 +29,15 @@ class CustomerController extends AbstractController
      * @Route("/create", name="customer_create", methods={"GET","POST"})
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param ValidatorInterface $validator
+     * @param Environment $twig
+     * @param Swift_Mailer $mailer
      * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder, ValidatorInterface $validator): Response
+    public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder, ValidatorInterface $validator, Environment $twig, Swift_Mailer $mailer): Response
     {
         $customer = new Customer();
         $form = $this->createForm(CustomerType::class, $customer);
@@ -44,6 +56,9 @@ class CustomerController extends AbstractController
 
             $entityManager->persist($customer);
             $entityManager->flush();
+
+            $emailing = new SendingMail();
+            $emailing->sendMail($twig, $mailer, $customer);
 
             $this->addFlash('success', 'Inscription réussie !');
 
