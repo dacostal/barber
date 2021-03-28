@@ -73,7 +73,7 @@ class AppFixtures extends Fixture
             $password=$this->encode->encodePassword($c,"azerty" );
             $firstName = $faker->firstName();
             $phone = '060000000'.$i;
-            $isadmin=false;
+            $isadmin=mt_rand(0,1) === 1;
 
             
             $b ->setEmail($email)
